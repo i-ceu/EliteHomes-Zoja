@@ -10,7 +10,7 @@ The API documentation can be found here. Follow this link to the Postman Collect
 
 ## Contributing
 
-The contribution guide can be found in the [Contribution Guidelines](https://laravel.com/docs/contributions).
+The contribution guide can be found in the [Contribution Guidelines](https://github.com/Olatisunkanmi/EliteHomes-Zoja/blob/readme/CONTRIBUTING.md).
 
 ## License
 
