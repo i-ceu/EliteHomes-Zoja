@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
+
+    public $length = 9;
     /**
      * Define the model's default state.
      *
@@ -18,6 +20,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'id' => fake()->unique()->randomNumber($this->length),
             'username' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             // 'email_verified_at' => now(),
@@ -26,6 +29,8 @@ class UserFactory extends Factory
             'password' => fake()->password(),
             'confirm_password' => fake()->password(),
             'phone_number' => fake()->phoneNumber(),
+            'isLandlord' => fake()->boolean,
+            'isAdmin' => fake()->boolean,
         ];
     }
 
