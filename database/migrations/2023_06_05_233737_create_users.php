@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('username')->unique();
             $table->string('email')
                 ->unique()
@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('confirm_password');
             $table->string('phone_number');
+            $table->boolean('isLandlord');
+            $table->boolean('isAdmin')->default(0);
             $table->timestamps();
         });
     }
