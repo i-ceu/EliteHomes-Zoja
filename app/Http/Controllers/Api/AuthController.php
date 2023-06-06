@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\{SignupRequest, LoginRequest};
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Symfony\Component\HttpFoundation\Response;
+
+
+class AuthController extends Controller
+{
+    public function register(SignupRequest $request)
+    {
+        $user = User::create($request->validated());
+
+        return response()->json([
+            'message' => 'User created successfully',
+            'user' => $user,
+        ], Response::HTTP_CREATED);
+    }
+
+    public function login(LoginRequest $request)
+    {
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'message' => 'Invalid credentials',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $user->full_name = $user->first_name . ' ' . $user->last_name;
+
+        $token = $user->createToken("$user->full_name token")->accessToken;
+
+
+
+        return response()->json([
+            'message' => 'Login successful',
+            'token' => $token,
+        ]);
+    }
+}

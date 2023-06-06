@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
-Route::get('/', function(){
-    return 'Welcome to Elite Homes API';
+Route::prefix('v1')->group(function () {
+
+
+    /// Declare the heartbeat route for the API
+    Route::any('/', function () {
+        return response()->json(['message' => 'Welcome to Elite Homes API'], 200);
+    });
+
+    // Declare register route
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+
+    // Declare login route
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
 });
