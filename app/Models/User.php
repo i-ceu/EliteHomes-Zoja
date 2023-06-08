@@ -28,7 +28,7 @@ class User extends Authenticatable
         'password',
         'confirm_password',
         'phone_number',
-        'isLandlord',
+        'is_landlord',
     ];
 
     /**
