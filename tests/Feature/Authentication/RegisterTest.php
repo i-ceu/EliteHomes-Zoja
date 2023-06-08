@@ -18,18 +18,19 @@ it('Register User', function () {
         'confirm_password' => 'RashForddd',
         'phone_number' => fake()->phoneNumber(),
         'is_landlord' => fake()->boolean(),
-
     ];
 
     $response = $this->postJson(route('register', $data));
     $data = $response->json('user');
 
-
+    //Assertions
     $response->assertStatus(201);
     expect($response['message'])->toBe('User created successfully');
     expect($response->json('user'))->toBeArray();
     $this->assertDatabaseCount('users', 1);
     $this->assertCount(9, $data);
+
+    //
     $this->assertDatabaseHas('users', [
         'username' => $data['username'],
         'email' => $data['email'],
@@ -38,8 +39,4 @@ it('Register User', function () {
         'phone_number' => $data['phone_number'],
         'is_landlord' => $data['is_landlord'],
     ]);
-    // $this->assertDatabaseMissing('users', [
-    //     'RashForddd' => $data['password'],
-    //     'RashForddd' => $data['confirm_password'],
-    // ]);
 });
