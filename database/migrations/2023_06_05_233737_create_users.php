@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('confirm_password');
             $table->string('phone_number');
-            $table->boolean('isLandlord');
-            $table->boolean('isAdmin')->default(0);
+            $table->boolean('is_landlord');
+            $table->boolean('is_admin')->default(0);
             $table->timestamps();
         });
     }
