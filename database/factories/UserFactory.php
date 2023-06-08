@@ -27,8 +27,8 @@ class UserFactory extends Factory
             'password' => fake()->password(),
             'confirm_password' => fake()->password(),
             'phone_number' => fake()->phoneNumber(),
-            'isLandlord' => fake()->boolean,
-            'isAdmin' => fake()->boolean,
+            'is_landlord' => fake()->boolean,
+            'is_admin' => fake()->boolean,
         ];
     }
 

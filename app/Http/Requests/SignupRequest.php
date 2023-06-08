@@ -31,7 +31,7 @@ class SignupRequest extends FormRequest
             'password' => 'required|string|min:8|same:confirm_password',
             'confirm_password' => 'required|string|min:8',
             'phone_number' => 'required|string|max:14|unique:users',
-            'isLandlord' => 'default:0',
+            'is_landlord' => 'required|boolean',
 
         ];
     }
