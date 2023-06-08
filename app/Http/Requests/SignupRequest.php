@@ -30,7 +30,7 @@ class SignupRequest extends FormRequest
             'last_name' => 'required|string|max:255',
             'password' => 'required|string|min:8|same:confirm_password',
             'confirm_password' => 'required|string|min:8',
-            'phone_number' => 'required|string|max:14|unique:users',
+            'phone_number' => 'required|string|max:20|unique:users',
             'is_landlord' => 'required|boolean',
 
         ];
