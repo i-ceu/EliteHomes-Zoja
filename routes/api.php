@@ -56,7 +56,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/{id}/reviews', [UserController::class, 'reviews'])->name('users.reviews');
 
             Route::group(['middleware' => [CheckOwnerShipMiddleware::class]], static function () {
-                Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
+                Route::put('/{id}', [UserController::class, 'update']);
                 Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
             });
         });

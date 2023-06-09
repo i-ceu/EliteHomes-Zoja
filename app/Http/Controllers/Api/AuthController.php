@@ -17,7 +17,7 @@ class AuthController extends Controller
     {
         $user = User::create($request->validated());
 
-        UserSignup::dispatch($user);
+        // UserSignup::dispatch($user);
 
         return response()->json([
             'message' => 'User created successfully',
