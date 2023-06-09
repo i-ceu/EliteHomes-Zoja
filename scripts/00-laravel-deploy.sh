@@ -3,7 +3,7 @@ echo "Running composer"
 composer init
 composer update
 composer global require hirak/prestissimo
-composer install --ignore-platform-reqs --no-dev --working-dir=/var/www/html/public
+composer install --ignore-platform-reqs --no-dev --working-dir=/var/www/html/
 
 echo "Caching config..."
 php artisan config:cache
