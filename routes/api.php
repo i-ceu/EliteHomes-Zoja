@@ -38,7 +38,7 @@ Route::prefix('v1')->group(function () {
 
 
     //All Unprotected routes should be declared here.
-    Route::post('/users/{id}', [UserController::class, 'show'])->name('users.show');
+    // Route::post('/users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
 
 
