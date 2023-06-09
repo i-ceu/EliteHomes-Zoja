@@ -41,7 +41,6 @@ Route::prefix('v1')->group(function () {
     Route::post('/users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
 
-    Route::apiResource('categories', CategoryController::class);
 
 
     //Protected routes for authenticated users
@@ -50,6 +49,7 @@ Route::prefix('v1')->group(function () {
         // All Admin routes should be declared here
         Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function () {
             Route::apiResource('/users', UserController::class)->name('Admin', 'Users');
+            Route::apiResource('categories', CategoryController::class);
         });
 
         Route::group(['prefix' => 'users'],  static function () {
