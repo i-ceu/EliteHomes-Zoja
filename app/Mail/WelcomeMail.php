@@ -15,7 +15,6 @@ class WelcomeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    // public $base_url = config('app.url');
     /**
      * Create a new message instance.
      */
