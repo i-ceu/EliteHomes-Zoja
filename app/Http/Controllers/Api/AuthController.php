@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\UserSignup;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\{SignupRequest, LoginRequest};
 use Illuminate\Http\Request;
@@ -15,6 +16,8 @@ class AuthController extends Controller
     public function register(SignupRequest $request)
     {
         $user = User::create($request->validated());
+
+        UserSignup::dispatch($user);
 
         return response()->json([
             'message' => 'User created successfully',
