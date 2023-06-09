@@ -5,7 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{
     AuthController,
-    UserController
+    UserController,
+    CategoryController
 };
 use App\Http\Middleware\{AdminMiddleware, CheckOwnerShipMiddleware};
 
@@ -39,6 +40,9 @@ Route::prefix('v1')->group(function () {
     //All Unprotected routes should be declared here.
     Route::post('/users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
+
+    Route::apiResource('categories', CategoryController::class);
+
 
     //Protected routes for authenticated users
     Route::group(['middleware'  => ['auth:api']], static function () {
