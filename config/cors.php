@@ -24,6 +24,7 @@ return [
         'https://elite-homes-zojatech.netlify.app',
         'http://127.0.0.1:5173',
         'http://127.0.0.1:5174',
+        'http://localhost:19006'
     ],
 
     'allowed_origins_patterns' => ['*'],
