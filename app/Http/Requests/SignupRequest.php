@@ -28,6 +28,7 @@ class SignupRequest extends FormRequest
             // 'email_verified_at' => 'nullable',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
+            'profile_picture' => 'nullable|string|max:2048',
             'password' => 'required|string|min:8|same:confirm_password',
             'confirm_password' => 'required|string|min:8',
             'phone_number' => 'required|string|max:20|unique:users',
