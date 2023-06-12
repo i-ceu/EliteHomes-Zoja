@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\BookTour;
 use App\Events\UserSignup;
+use App\Listeners\SendBookingMail;
 use App\Listeners\SendWelcomeMail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,7 +24,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserSignup::class => [
             SendWelcomeMail::class,
-        ]
+        ],
+        BookTour::class => [
+            SendBookingMail::class,
+        ],
     ];
 
     /**
