@@ -42,14 +42,11 @@ class AuthController extends Controller
             'profilePicture' => $user->profile_picture,
         ];
 
-
         $token = $user->createToken("$user->full_name token")->accessToken;
-
-
 
         return response()->json([
             'message' => 'Login successful',
-            $user = $data,
+            'data' => $data,
             'token' => $token,
         ]);
     }
