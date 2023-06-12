@@ -19,6 +19,7 @@ return new class extends Migration
                 ->nullable();
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('profile_picture');
             $table->string('password');
             $table->string('confirm_password');
             $table->string('phone_number');
