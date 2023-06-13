@@ -5,7 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{
     AuthController,
-    UserController
+    UserController,
+    PropertyController
 };
 use App\Http\Middleware\{AdminMiddleware, CheckOwnerShipMiddleware, IsLandlord};
 
@@ -34,7 +35,7 @@ Route::prefix('v1')->group(function () {
 
     // Declare login route
     Route::post('/login', [AuthController::class, 'login'])->name('login');
-    
+
     //Route for user to get all properties
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
     //route for user to view one product via id
@@ -46,15 +47,15 @@ Route::prefix('v1')->group(function () {
     //route for user to delete a product
     //Route::delete('/properties{id}',[ProductController::class, 'destroy']);
 
+    Route::get('/properties/{property}', [PropertyController::class, 'show']);
 
-    Route::group(['middleware'=>[IsLandlord::class]], static function(){
-        Route::post('/properties/{id}', [PropertyController::class, 'show']);
+    Route::group(['middleware' => [IsLandlord::class]], static function () {
         //route for user to store a product
-        Route::post('/properties',[PropertyController::class, 'store'])->name('properties.store');
+        Route::post('/properties', [PropertyController::class, 'store'])->name('properties.store');
         //route for user to update a product
         Route::put('/properties{id}', [PropertyController::class, 'update'])->name('properties.update');
         //route for user to delete a product
-        Route::delete('/properties{id}',[PropertyController::class, 'destroy'])->name('properties.destroy');
+        Route::delete('/properties{id}', [PropertyController::class, 'destroy'])->name('properties.destroy');
     });
     //All Unprotected routes should be declared here.
     Route::post('/users/{id}', [UserController::class, 'show'])->name('users.show');
@@ -77,5 +78,4 @@ Route::prefix('v1')->group(function () {
             });
         });
     });
-
 });

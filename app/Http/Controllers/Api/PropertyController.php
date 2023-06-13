@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\PropertyRequest;
 use App\Http\Resources\PropertyCollection;
 use App\Http\Resources\PropertyResource;
+use App\Http\Controllers\Controller;
 use App\Models\Property;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -29,52 +30,45 @@ class PropertyController extends Controller
         $property->property_category = $request->property_category;
         $property->property_description = $request->property_description;
         $property->property_total_floor_area = $request->property_total_floor_area;
-        $property->property_bedroom_number = $request-> property_bedroom_number;
-        $property->property_toilet_number= $request->property_toilet_number;
+        $property->property_bedroom_number = $request->property_bedroom_number;
+        $property->property_toilet_number = $request->property_toilet_number;
 
         return response([
-            'data'=> new PropertyResource($property)
+            'data' => new PropertyResource($property)
         ], Response::HTTP_CREATED);
     }
 
-    public function show(string $id)
+    public function show(int $property)
     {
-        try
-        {
-            $id = Property::findOrFail($id);
-
+        try {
+            $property = Property::findOrFail($property);
+            // echo $property;
             return response()->json([
-                'Message'=>'Property Found',
-                'data'=> new PropertyResource($id),
+                'Message' => 'Property Found',
+                'data' => new PropertyResource($property),
             ], Response::HTTP_OK);
-        
-        } catch (\Throwable $th){
+        } catch (\Throwable $th) {
             return response()->json([
-                'Message'=>'Propery not found',
+                'Message' => 'Property not found',
             ], Response::HTTP_NOT_FOUND);
         }
-
     }
 
     public function update(Request $request, string $property)
     {
-        try
-        {
+        try {
             $property = Property::findOrFail($property);
 
             $property->update($request->all());
 
-             return response([
-            'data' => new PropertyResource($property)
-        ], Response::HTTP_OK);
-        }catch(\Throwable $th){
+            return response([
+                'data' => new PropertyResource($property)
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
             return response()->json([
-                'Message'=>'Property not Found'
+                'Message' => 'Property not Found'
             ], Response::HTTP_NOT_FOUND);
         }
-        
-
-       
     }
 
     public function destroy(Property $property)

@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignUuid('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignUuid('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('property_name');
             $table->string('property_address');
             $table->double('property_price');
-            $table->foreignUuid('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->longText('property_description');
             $table->integer('property_stock');
             $table->double('property_total_floor_area');
