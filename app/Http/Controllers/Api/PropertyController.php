@@ -22,16 +22,7 @@ class PropertyController extends Controller
 
     public function store(PropertyRequest $request)
     {
-        $property = new Property;
-        $property->property_name = $request->property_name;
-        $property->property_address = $request->property_address;
-        $property->property_price = $request->property_price;
-        $property->property_stock = $request->property_stock;
-        $property->property_category = $request->property_category;
-        $property->property_description = $request->property_description;
-        $property->property_total_floor_area = $request->property_total_floor_area;
-        $property->property_bedroom_number = $request->property_bedroom_number;
-        $property->property_toilet_number = $request->property_toilet_number;
+        $property = Property::create($request->validated());
 
         return response([
             'data' => new PropertyResource($property)
@@ -42,7 +33,7 @@ class PropertyController extends Controller
     {
         try {
             $property = Property::findOrFail($property);
-            // echo $property;
+
             return response()->json([
                 'Message' => 'Property Found',
                 'data' => new PropertyResource($property),
@@ -54,7 +45,7 @@ class PropertyController extends Controller
         }
     }
 
-    public function update(Request $request, string $property)
+    public function update(Request $request, int $property)
     {
         try {
             $property = Property::findOrFail($property);
@@ -71,9 +62,19 @@ class PropertyController extends Controller
         }
     }
 
-    public function destroy(Property $property)
+    public function destroy(int $property)
     {
-        $property->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
+        try {
+            $property = Property::findOrFail($property);
+
+            $property->delete();
+            return response()->json([
+                'Message' => 'Property deleted succesfully'
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'Message' => 'Property not Found'
+            ], Response::HTTP_NOT_FOUND);
+        }
     }
 }

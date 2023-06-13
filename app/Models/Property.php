@@ -14,7 +14,7 @@ class Property extends Model
         'property_name',
         'property_address',
         'property_price',
-        'property_category',
+        'category_id',
         'property_description',
         'property_stock',
         'property_total_floor_area',
@@ -22,10 +22,14 @@ class Property extends Model
         'property_toilet_number',
         'property_plan_image_url',
         'property_other_image_url',
-        'owner_id'
+        'user_id'
     ];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 }

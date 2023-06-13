@@ -24,14 +24,16 @@ class PropertyResource extends JsonResource
             'property_address' => $this->property_address,
             'property_price' => $this->property_price,
             'property_stock' => $this->property_stock == 0 ? 'Property Unavailable' : $this->property_stock,
-            'property_category' => $this->property_category,
+            'category_id' => $this->category_id,
             'property_description' => $this->property_description,
             'property_total_floor_area' => $this->property_total_floor_area,
             'property_bedroom_number' => $this->property_bedroom_number,
             'property_toilet_number' => $this->property_toilet_number,
-            // 'href' => [
-            //     'categories' => route('categories.index', $this->id)
-            // ]
+            'property_plan_image_url' => $this->property_plan_image_url,
+            'property_other_image_url' => $this->property_other_image_url,
+            'href' => [
+                'categories' => route('categories.show', $this->category_id)
+            ]
 
 
         ];

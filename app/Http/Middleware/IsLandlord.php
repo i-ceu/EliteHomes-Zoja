@@ -15,14 +15,13 @@ class IsLandlord
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user=auth()->user();
-        if(!$user->is_landlord){
+        $user = $request->user();
+        if (!$user->is_landlord) {
             return response()->json([
                 'Message' => 'You are not authorized to access this route'
             ], Response::HTTP_UNAUTHORIZED);
-        }else{
+        } else {
             return $next($request);
         }
-        
     }
 }

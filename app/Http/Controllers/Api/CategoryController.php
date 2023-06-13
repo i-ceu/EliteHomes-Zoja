@@ -46,8 +46,9 @@ class CategoryController extends Controller
     {
         try {
             $category = Category::findorFail($category);
+            // echo $category;
             return response()->json([
-                'data' => $category,
+                'data' => new CategoryResource($category),
                 'status' => 200
             ]);
         } catch (\Throwable $th) {
