@@ -6,9 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{
     AuthController,
     BookingController,
-    UserController
+    UserController,
+    PropertyController,
+    CategoryController
 };
-use App\Http\Middleware\{AdminMiddleware, CheckOwnerShipMiddleware};
+use App\Http\Middleware\{AdminMiddleware, CheckOwnerShipMiddleware, CheckPropertyOwner, IsLandlord};
 
 /*
 |--------------------------------------------------------------------------
@@ -37,18 +39,34 @@ Route::prefix('v1')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 
-
     //All Unprotected routes should be declared here.
     Route::post('/users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
 
+    //Route for user to get all properties
+    Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
+    //route for user to update a product
+    Route::get('/properties/{property}', [PropertyController::class, 'show']);
+
+
     //Protected routes for authenticated users
     Route::group(['middleware'  => ['auth:api']], static function () {
+
+        Route::group(['middleware' => [IsLandlord::class]], static function () {
+            //route for user to store a product
+            Route::post('/properties', [PropertyController::class, 'store'])->name('properties.store');
+        });
+        Route::group(['middleware' => [CheckPropertyOwner::class]], static function () {
+            Route::put('/properties/{property}', [PropertyController::class, 'update'])->name('properties.update');
+            //route for user to delete a product
+            Route::delete('/properties/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
+        });
 
         Route::apiResource('/booking', BookingController::class);
         // All Admin routes should be declared here
         Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function () {
             Route::apiResource('/users', UserController::class)->name('Admin', 'Users');
+            Route::apiResource('categories', CategoryController::class)->name('Admin', 'categories');
         });
 
         Route::group(['prefix' => 'users'],  static function () {
