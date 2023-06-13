@@ -35,14 +35,18 @@ class AuthController extends Controller
             ], Response::HTTP_UNAUTHORIZED);
         }
 
-        $user->full_name = $user->first_name . ' ' . $user->last_name;
+        $data = [
+            'userId' => $user->id,
+            'firstName' => $user->first_name,
+            'lastName' => $user->last_name,
+            'profilePicture' => $user->profile_picture,
+        ];
 
         $token = $user->createToken("$user->full_name token")->accessToken;
 
-
-
         return response()->json([
             'message' => 'Login successful',
+            'data' => $data,
             'token' => $token,
         ]);
     }

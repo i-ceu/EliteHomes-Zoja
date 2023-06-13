@@ -10,11 +10,11 @@ The API documentation can be found here. Follow this link to the Postman Collect
 
 ## Contributing
 
-The contribution guide can be found in the [Contribution Guidelines](https://github.com/Olatisunkanmi/EliteHomes-Zoja/blob/readme/CONTRIBUTING.md).
+The contribution guide can be found in the [Contribution Guidelines](https://github.com/ubaniIsaac/EliteHomes-Zoja/blob/readme/CONTRIBUTING.md).
 
 ## Documentation
 
-The Documentation can be found in the [Documentation ](https://github.com/Olatisunkanmi/EliteHomes-Zoja/blob/readme/DOCUMENTATION.md).
+The Documentation can be found in the [Documentation ](https://github.com/ubaniIsaac/EliteHomes-Zoja/blob/readme/DOCUMENTATION.md).
 
 ## License
 
