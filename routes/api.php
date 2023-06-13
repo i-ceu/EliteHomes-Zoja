@@ -38,6 +38,12 @@ Route::prefix('v1')->group(function () {
     // Declare login route
     Route::post('/login', [AuthController::class, 'login'])->name('login');
 
+    //Route for user to get all properties
+    Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
+
+
+    //route for user to update a product
+    Route::get('/properties/{property}', [PropertyController::class, 'show']);
 
     //All Unprotected routes should be declared here.
     Route::post('/users/{id}', [UserController::class, 'show'])->name('users.show');
@@ -48,6 +54,7 @@ Route::prefix('v1')->group(function () {
     //route for user to update a product
     Route::get('/properties/{property}', [PropertyController::class, 'show']);
 
+    Route::apiResource('categories', CategoryController::class);
 
     //Protected routes for authenticated users
     Route::group(['middleware'  => ['auth:api']], static function () {
@@ -62,9 +69,13 @@ Route::prefix('v1')->group(function () {
             Route::delete('/properties/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
         });
 
+        Route::get('/categories', [CategoryController::class, 'index'])->name('no-admin-index');
+        Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('no-admin-show');
+
         Route::apiResource('/booking', BookingController::class);
         // All Admin routes should be declared here
         Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function () {
+            Route::apiResource('/categories', CategoryController::class)->name('Admin', 'Categories');
             Route::apiResource('/users', UserController::class)->name('Admin', 'Users');
             Route::apiResource('categories', CategoryController::class)->name('Admin', 'categories');
         });
@@ -73,8 +84,8 @@ Route::prefix('v1')->group(function () {
             Route::get('/{id}/reviews', [UserController::class, 'reviews'])->name('users.reviews');
 
             Route::group(['middleware' => [CheckOwnerShipMiddleware::class]], static function () {
-                Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
-                Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+                Route::put('/{id}', [UserController::class, 'update'])->name('user-update-self');
+                Route::delete('/{id}', [UserController::class, 'destroy'])->name('users-delete-self');
             });
         });
     });
