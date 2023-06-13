@@ -11,22 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('property', function (Blueprint $table) {
+        Schema::create('properties', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('user_id')->references('id')->on('products')->cascadeOnDelete();
+            $table->foreignUuid('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('property_name');
             $table->string('property_address');
             $table->double('property_price');
-            $table->string('property_category');
-            $table->paragraph('property_description');
+            $table->foreignUuid('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->longText('property_description');
             $table->integer('property_stock');
-            $table->double('property_total_floor_area') .' cm^2';
+            $table->double('property_total_floor_area');
             $table->integer('property_bedroom_number');
             $table->integer('property_toilet_number');
-            $table->url('property_plan_image_url');
-            $table->url('property_other_image_url');
-            $table->string('owner_id');
-            
+            $table->string('property_plan_image_url');
+            $table->string('property_other_image_url');
+
             $table->timestamps();
         });
     }
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('property');
+        Schema::dropIfExists('properties');
     }
 };
