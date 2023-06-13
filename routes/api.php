@@ -49,7 +49,6 @@ Route::prefix('v1')->group(function () {
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
 
 
-    Route::apiResource('categories', CategoryController::class);
 
     //Protected routes for authenticated users
     Route::group(['middleware'  => ['auth:api']], static function () {
@@ -64,8 +63,12 @@ Route::prefix('v1')->group(function () {
             Route::delete('/properties/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
         });
 
+        Route::get('/categories', [CategoryController::class, 'index'])->name('no-admin-index');
+        Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('no-admin-show');
+
         // All Admin routes should be declared here
         Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function () {
+            Route::apiResource('/categories', CategoryController::class)->name('Admin', 'Categories');
             Route::apiResource('/users', UserController::class)->name('Admin', 'Users');
         });
 
