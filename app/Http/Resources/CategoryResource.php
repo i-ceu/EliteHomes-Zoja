@@ -21,9 +21,9 @@ class CategoryResource extends JsonResource
             'attributes' => [
                 'title' => $this->title,
             ],
-            // 'relationships' => [
-            //     'product' => PropertyResource::collection($this->products)
-            // ]
+            'relationships' => [
+                'properties' => PropertyResource::collection($this->products)
+            ]
         ];
     }
 }
