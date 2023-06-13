@@ -16,7 +16,7 @@ class PropertySeeder extends Seeder
     {
         Property::factory()->count(10)
             ->forUser([
-                'username' => 'testing',
+                'username' => 'user',
             ])
             ->create();
     }

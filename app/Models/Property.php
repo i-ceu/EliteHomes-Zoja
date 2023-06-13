@@ -32,4 +32,8 @@ class Property extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    public function favourites()
+    {
+         return $this->hasMany(Favourite::class);
+    }
 }
