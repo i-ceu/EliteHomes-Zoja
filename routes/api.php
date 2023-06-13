@@ -5,9 +5,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{
     AuthController,
-    UserController
+    UserController,
+    PropertyController,
+    CategoryController
 };
-use App\Http\Middleware\{AdminMiddleware, CheckOwnerShipMiddleware};
+use App\Http\Middleware\{AdminMiddleware, CheckOwnerShipMiddleware, CheckPropertyOwner, IsLandlord};
 
 /*
 |--------------------------------------------------------------------------
@@ -35,13 +37,32 @@ Route::prefix('v1')->group(function () {
     // Declare login route
     Route::post('/login', [AuthController::class, 'login'])->name('login');
 
+    //Route for user to get all properties
+    Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
+
+
+    //route for user to update a product
+    Route::get('/properties/{property}', [PropertyController::class, 'show']);
 
     //All Unprotected routes should be declared here.
     Route::post('/users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
 
+
+    Route::apiResource('categories', CategoryController::class);
+
     //Protected routes for authenticated users
     Route::group(['middleware'  => ['auth:api']], static function () {
+
+        Route::group(['middleware' => [IsLandlord::class]], static function () {
+            //route for user to store a product
+            Route::post('/properties', [PropertyController::class, 'store'])->name('properties.store');
+        });
+        Route::group(['middleware' => [CheckPropertyOwner::class]], static function () {
+            Route::put('/properties/{property}', [PropertyController::class, 'update'])->name('properties.update');
+            //route for user to delete a product
+            Route::delete('/properties/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
+        });
 
         // All Admin routes should be declared here
         Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function () {
