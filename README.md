@@ -6,7 +6,7 @@ Elite homes
 
 ## API DOCUMENTATION
 
-The API documentation can be found here. Follow this link to the Postman Collection []().
+The API documentation can be found here. Follow this link to the Postman Collection [API Documentation](https://documenter.getpostman.com/view/19072098/2s93sf3X7s#46cf8089-6cae-4759-bc8a-a10ddcc0ee15).
 
 ## Contributing
 

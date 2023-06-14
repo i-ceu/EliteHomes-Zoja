@@ -17,7 +17,10 @@ class PropertyRequest extends FormRequest
 
     public function __construct(Request $request)
     {
-        $user_id = $request->merge(['user_id' => $request->user()->id]);
+        $request->merge([
+            'user_id' => $request->user()->id,
+            'property_other_image_url' => json_encode($request->property_other_image_url)
+        ]);
     }
 
     /**
