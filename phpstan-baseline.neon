@@ -1,0 +1,331 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\User\\:\\:\\$full_name\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/AuthController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\AuthController\\:\\:login\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/AuthController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\AuthController\\:\\:register\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/AuthController.php
+
+		-
+			message: "#^Cannot call method update\\(\\) on App\\\\Models\\\\Category\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/CategoryController.php
+
+		-
+			message: "#^Call to method latest\\(\\) on an unknown class App\\\\Models\\\\hasMany\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/FavouriteController.php
+
+		-
+			message: "#^Cannot call method favourites\\(\\) on App\\\\Models\\\\User\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/FavouriteController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\PropertyController\\:\\:destroy\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/PropertyController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\PropertyController\\:\\:index\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/PropertyController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\PropertyController\\:\\:show\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/PropertyController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\PropertyController\\:\\:store\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/PropertyController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\PropertyController\\:\\:update\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/PropertyController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\UserController\\:\\:show\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/UserController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\UserController\\:\\:update\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/UserController.php
+
+		-
+			message: "#^Cannot access property \\$is_admin on App\\\\Models\\\\User\\|null\\.$#"
+			count: 1
+			path: app/Http/Middleware/AdminMiddleware.php
+
+		-
+			message: "#^Cannot access property \\$id on App\\\\Models\\\\User\\|null\\.$#"
+			count: 1
+			path: app/Http/Middleware/CheckOwnerShipMiddleware.php
+
+		-
+			message: "#^Cannot call method parameter\\(\\) on Illuminate\\\\Routing\\\\Route\\|null\\.$#"
+			count: 1
+			path: app/Http/Middleware/CheckOwnerShipMiddleware.php
+
+		-
+			message: "#^Cannot access property \\$id on App\\\\Models\\\\User\\|null\\.$#"
+			count: 1
+			path: app/Http/Middleware/CheckPropertyOwner.php
+
+		-
+			message: "#^Cannot call method parameter\\(\\) on Illuminate\\\\Routing\\\\Route\\|null\\.$#"
+			count: 1
+			path: app/Http/Middleware/CheckPropertyOwner.php
+
+		-
+			message: "#^Cannot access property \\$is_landlord on App\\\\Models\\\\User\\|null\\.$#"
+			count: 1
+			path: app/Http/Middleware/IsLandlord.php
+
+		-
+			message: "#^Cannot access property \\$favourites on App\\\\Models\\\\User\\|null\\.$#"
+			count: 1
+			path: app/Http/Middleware/UserFav.php
+
+		-
+			message: "#^Cannot access property \\$id on App\\\\Models\\\\User\\|null\\.$#"
+			count: 1
+			path: app/Http/Requests/PropertyRequest.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\CategoryResource\\:\\:\\$products\\.$#"
+			count: 1
+			path: app/Http/Resources/CategoryResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\FavouriteResource\\:\\:\\$id\\.$#"
+			count: 1
+			path: app/Http/Resources/FavouriteResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\FavouriteResource\\:\\:\\$property_id\\.$#"
+			count: 1
+			path: app/Http/Resources/FavouriteResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\FavouriteResource\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Http/Resources/FavouriteResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyCollection\\:\\:\\$category_id\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyCollection.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyCollection\\:\\:\\$property_address\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyCollection.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyCollection\\:\\:\\$property_bedroom_number\\.$#"
+			count: 2
+			path: app/Http/Resources/PropertyCollection.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyCollection\\:\\:\\$property_description\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyCollection.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyCollection\\:\\:\\$property_name\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyCollection.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyCollection\\:\\:\\$property_price\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyCollection.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyCollection\\:\\:\\$property_stock\\.$#"
+			count: 2
+			path: app/Http/Resources/PropertyCollection.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyCollection\\:\\:\\$property_toilet_number\\.$#"
+			count: 2
+			path: app/Http/Resources/PropertyCollection.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyCollection\\:\\:\\$property_total_floor_area\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyCollection.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyCollection\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyCollection.php
+
+		-
+			message: "#^PHPDoc tag @return with type array\\|Illuminate\\\\Contracts\\\\Support\\\\Arrayable\\|JsonSerializable is not subtype of native type array\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyCollection.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyResource\\:\\:\\$category_id\\.$#"
+			count: 2
+			path: app/Http/Resources/PropertyResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyResource\\:\\:\\$id\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyResource\\:\\:\\$property_address\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyResource\\:\\:\\$property_bedroom_number\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyResource\\:\\:\\$property_description\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyResource\\:\\:\\$property_name\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyResource\\:\\:\\$property_other_image_url\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyResource\\:\\:\\$property_plan_image_url\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyResource\\:\\:\\$property_price\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyResource\\:\\:\\$property_stock\\.$#"
+			count: 2
+			path: app/Http/Resources/PropertyResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyResource\\:\\:\\$property_toilet_number\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyResource\\:\\:\\$property_total_floor_area\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\PropertyResource\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Http/Resources/PropertyResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\UserResource\\:\\:\\$created_at\\.$#"
+			count: 1
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\UserResource\\:\\:\\$email\\.$#"
+			count: 1
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\UserResource\\:\\:\\$first_name\\.$#"
+			count: 2
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\UserResource\\:\\:\\$id\\.$#"
+			count: 1
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\UserResource\\:\\:\\$last_name\\.$#"
+			count: 2
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\UserResource\\:\\:\\$phone_number\\.$#"
+			count: 1
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\UserResource\\:\\:\\$updated_at\\.$#"
+			count: 1
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\UserResource\\:\\:\\$username\\.$#"
+			count: 1
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Services\\\\UserServices\\:\\:fetchAllUsers\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Services/UserServices.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Services\\\\UserServices\\:\\:fetchUserByEmail\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Services/UserServices.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Services\\\\UserServices\\:\\:fetchUserById\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Services/UserServices.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: app/Http/Services/UserServices.php
+
+		-
+			message: "#^Class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany referenced with incorrect case\\: Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\hasMany\\.$#"
+			count: 2
+			path: app/Models/Favourite.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Property\\:\\:favourites\\(\\) has invalid return type App\\\\Models\\\\belongsToMany\\.$#"
+			count: 1
+			path: app/Models/Property.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Property\\:\\:favourites\\(\\) should return App\\\\Models\\\\belongsToMany but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\Favourite\\>\\.$#"
+			count: 1
+			path: app/Models/Property.php
+
+		-
+			message: "#^Method App\\\\Models\\\\User\\:\\:favourites\\(\\) has invalid return type App\\\\Models\\\\hasMany\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method App\\\\Models\\\\User\\:\\:favourites\\(\\) should return App\\\\Models\\\\hasMany but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Favourite\\>\\.$#"
+			count: 1
+			path: app/Models/User.php

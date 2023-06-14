@@ -3,11 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Property;
+use App\Models\Favourite;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -25,7 +27,7 @@ class User extends Authenticatable
         'email',
         'first_name',
         'last_name',
-        // 'profile_picture',
+        'profile_picture',
         'password',
         'confirm_password',
         'phone_number',
@@ -53,4 +55,15 @@ class User extends Authenticatable
         'password' => 'hashed',
         'confirm_password' => 'hashed',
     ];
+
+
+    public function property(): hasMany
+    {
+         return $this->hasMany(Property::class);
+    }
+    public function favourite() : hasMany
+    {
+         return $this->hasMany(Favourite::class);
+    }
+
 }

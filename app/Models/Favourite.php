@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Property;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\hasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Favourite extends Model
@@ -16,12 +18,12 @@ class Favourite extends Model
         'property_id'
     ];
 
-    public function user()
+    public function user(): belongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
-    public function product()
+    public function property(): hasMany
     {
         return $this->hasMany(Property::class);
     }
