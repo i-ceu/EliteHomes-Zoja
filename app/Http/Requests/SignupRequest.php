@@ -33,6 +33,7 @@ class SignupRequest extends FormRequest
             'confirm_password' => 'required|string|min:8',
             'phone_number' => 'required|string|max:20|unique:users',
             'is_landlord' => 'required|boolean',
+            'is_admin' => 'nullable|boolean'
 
         ];
     }
