@@ -11,6 +11,8 @@ use App\Http\Resources\BookingResource;
 use App\Models\Property;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+
 
 
 class BookingController extends Controller
@@ -67,21 +69,20 @@ class BookingController extends Controller
             ]);
         }
     }
-    public function showAllPropertyEnquiries(int $id): JsonResponse
+    public function showAllPropertyEnquiries(int $property): JsonResponse
     {
         try {
-            echo 'test';
-            $booking = Booking::where('property_id', '=', $id);
+            $allBookings = Booking::where('property_id', $property)->get();
             return response()->json([
                 'message' => "bookings showed successfully",
-                'data' => new BookingResource($booking),
+                'data' => new BookingResource($allBookings),
                 'status' => 200
             ]);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "booking with this id not found ",
                 'status' => 404
-            ]);
+            ], Response::HTTP_NOT_FOUND);
         }
     }
 
