@@ -74,9 +74,9 @@ Route::prefix('v1')->group(function () {
 
         Route::apiResource('/booking', BookingController::class);
 
+        Route::apiResource('/categories', CategoryController::class)->name('Admin', 'Categories');
         // All Admin routes should be declared here
         Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function () {
-            Route::apiResource('/categories', CategoryController::class)->name('Admin', 'Categories');
             Route::apiResource('/users', UserController::class)->name('Admin', 'Users');
         });
 
