@@ -14,7 +14,7 @@ The contribution guide can be found in the [Contribution Guidelines](https://git
 
 ## Documentation
 
-The Documentation can be found in the [Documentation ](https://github.com/ubaniIsaac/EliteHomes-Zoja/blob/readme/DOCUMENTATION.md).
+The Documentation can be found in the [Documentation ](https://documenter.getpostman.com/view/19072098/2s93sf3X7s#46cf8089-6cae-4759-bc8a-a10ddcc0ee15).
 
 ## License
 
