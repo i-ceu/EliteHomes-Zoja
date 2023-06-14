@@ -30,7 +30,7 @@ class PropertyResource extends JsonResource
             'property_bedroom_number' => $this->property_bedroom_number,
             'property_toilet_number' => $this->property_toilet_number,
             'property_plan_image_url' => $this->property_plan_image_url,
-            'property_other_image_url' => $this->property_other_image_url,
+            'property_other_image_url' => json_decode($this->property_other_image_url),
             'href' => [
                 'categories' => route('categories.show', $this->category_id)
             ]
