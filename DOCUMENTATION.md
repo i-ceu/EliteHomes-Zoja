@@ -4,13 +4,31 @@
 
 ### Register a New User
 
--   URL: /api/register
+-   URL: /api/v1/login
+```
+-   data : {
+        "email": "user@mail.com",
+        "password":"password"
+           }
+ ```
 -   Method: POST
 -   Description: Register a new user in the system.
 
 ### User Login
 
--   URL: /api/login
+-   URL: /api/v1/register
+```
+-   data : {
+       "username":"tester",
+       "first_name":"john",
+       "last_name":"doe",
+       "email":"john@mail.com",
+       "password":"password",
+       "confirm_password":"password",
+       "phone_number":"phoneNumber",
+        "is_landlord": 0
+           }
+```
 -   Method: POST
 -   Description: User login to authenticate and obtain an access token.
 
