@@ -32,7 +32,7 @@ class BookingRequest extends FormRequest
             'email' => ['string', 'required'],
             'message' => ['string', 'required'],
             'phone_number' => ['string', 'required'],
-            // 'property_id' => ['required', 'exists:propeties,id'],
+            'property_id' => ['required', 'exists:properties,id'],
             'sender_id' => ['required', 'exists:users,id'],
         ];
     }

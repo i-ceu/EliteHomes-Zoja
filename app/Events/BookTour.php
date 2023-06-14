@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Property;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -20,6 +21,7 @@ class BookTour
      */
     public function __construct(
         public User $user,
+        public Property $property
 
     ) {
         //

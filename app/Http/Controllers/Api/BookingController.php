@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\BookTour;
 use App\Models\Booking;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookingRequest;
 use App\Http\Resources\BookingResource;
+use App\Models\Property;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
 
@@ -29,6 +32,10 @@ class BookingController extends Controller
         $booking = Booking::create($request->validated());
 
         //todo 
+        $property = Property::findOrFail($booking->property_id);
+        $user = User::findOrFail($property->user_id);
+
+        BookTour::dispatch($user, $property);
         //send mail to owner
         //get landlord object from request
         //get email and send mail
@@ -44,7 +51,7 @@ class BookingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $booking): JsonResponse
+    public function show(string $booking): JsonResponse
     {
         try {
             $booking = Booking::findOrFail($booking);
@@ -60,10 +67,11 @@ class BookingController extends Controller
             ]);
         }
     }
-    public function showAllPropertyBookings(int $property): JsonResponse
+    public function showAllPropertyEnquiries(int $id): JsonResponse
     {
         try {
-            $booking = Booking::find($property);
+            echo 'test';
+            $booking = Booking::where('property_id', '=', $id);
             return response()->json([
                 'message' => "bookings showed successfully",
                 'data' => new BookingResource($booking),

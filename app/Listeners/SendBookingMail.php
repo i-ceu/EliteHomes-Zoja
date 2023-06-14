@@ -23,6 +23,6 @@ class SendBookingMail
      */
     public function handle(BookTour $event): void
     {
-        Mail::to($event->user->email)->send(new BookingMail($event->user));
+        Mail::to($event->user->email)->send(new BookingMail($event->user, $event->property));
     }
 }

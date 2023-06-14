@@ -46,7 +46,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/properties/{property}', [PropertyController::class, 'show']);
 
     //All Unprotected routes should be declared here.
-    Route::post('/users/{id}', [UserController::class, 'show'])->name('users.show');
+    Route::post('/users/{id}', [UserController::class, 'show'])->name('no-auth-user-show');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
 
     //Route for user to get all properties
@@ -54,7 +54,6 @@ Route::prefix('v1')->group(function () {
     //route for user to update a product
     Route::get('/properties/{property}', [PropertyController::class, 'show']);
 
-    Route::apiResource('categories', CategoryController::class);
 
     //Protected routes for authenticated users
     Route::group(['middleware'  => ['auth:api']], static function () {
@@ -72,12 +71,13 @@ Route::prefix('v1')->group(function () {
         Route::get('/categories', [CategoryController::class, 'index'])->name('no-admin-index');
         Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('no-admin-show');
 
+        Route::get('/booking/{$id}', [BookingController::class, 'showAllPropertyEnquiries'])->name('show-all-property-enquiries');
         Route::apiResource('/booking', BookingController::class);
+
         // All Admin routes should be declared here
         Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function () {
             Route::apiResource('/categories', CategoryController::class)->name('Admin', 'Categories');
             Route::apiResource('/users', UserController::class)->name('Admin', 'Users');
-            Route::apiResource('categories', CategoryController::class)->name('Admin', 'categories');
         });
 
         Route::group(['prefix' => 'users'],  static function () {

@@ -30,7 +30,7 @@ class WelcomeMail extends Mailable
     {
         return new Envelope(
             subject: 'Welcome To Elite Homes',
-            from: new Address('eliteHomes@mail.com', 'EliteHomes'),
+            from: new Address('eliteHomes@gmail.com', 'EliteHomes'),
         );
     }
 

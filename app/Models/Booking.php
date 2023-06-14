@@ -18,8 +18,8 @@ class Booking extends Model
         'email',
         'message',
         'phone_number',
-        // 'property_id',
         'sender_id',
+        'property_id',
     ];
 
     public function property(): BelongsTo
