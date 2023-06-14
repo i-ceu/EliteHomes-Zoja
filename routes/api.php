@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{
     AuthController,
+    BookingController,
     UserController,
     PropertyController,
     CategoryController
@@ -48,6 +49,10 @@ Route::prefix('v1')->group(function () {
     Route::post('/users/{id}', [UserController::class, 'show'])->name('no-auth-user-show');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
 
+    //Route for user to get all properties
+    Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
+    //route for user to update a product
+    Route::get('/properties/{property}', [PropertyController::class, 'show']);
 
 
     //Protected routes for authenticated users
@@ -61,10 +66,13 @@ Route::prefix('v1')->group(function () {
             Route::put('/properties/{property}', [PropertyController::class, 'update'])->name('properties.update');
             //route for user to delete a product
             Route::delete('/properties/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
+            Route::get('/properties/{property}/bookings', [BookingController::class, 'showAllPropertyEnquiries'])->name('show-all-property-enquiries');
         });
 
         Route::get('/categories', [CategoryController::class, 'index'])->name('no-admin-index');
         Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('no-admin-show');
+
+        Route::apiResource('/booking', BookingController::class);
 
         // All Admin routes should be declared here
         Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function () {

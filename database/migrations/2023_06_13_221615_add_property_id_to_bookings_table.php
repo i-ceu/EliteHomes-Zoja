@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('profile_picture')->nullable();
+        Schema::table('bookings', function (Blueprint $table) {
+            $table->foreignId('property_id')->constrained('properties')->cascadeOnDelete();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('profile_picture');
+        Schema::table('bookings', function (Blueprint $table) {
+            $table->dropColumn('property_id');
         });
     }
 };
