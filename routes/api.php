@@ -38,6 +38,9 @@ Route::prefix('v1')->group(function () {
     // Declare login route
     Route::post('/login', [AuthController::class, 'login'])->name('login');
 
+     // Route for user to store a favourite
+     Route::post('/favourites', [FavouriteController::class, 'store'])->name('favourite.store');
+
     //Route for user to get all properties
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
     //route for user to get one property
