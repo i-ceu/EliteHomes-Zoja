@@ -67,9 +67,10 @@ Route::prefix('v1')->group(function () {
             Route::put('/properties/{property}', [PropertyController::class, 'update'])->name('properties.update');
             //route for user to delete a product
             Route::delete('/properties/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
+            Route::get('/properties/{property}/bookings', [BookingController::class, 'showAllPropertyEnquiries'])->name('show-all-property-enquiries');
         });
 
-        Route::get('/properties/{property}/bookings', [BookingController::class, 'showAllPropertyEnquiries'])->name('show-all-property-enquiries');
+
 
         Route::get('/categories', [CategoryController::class, 'index'])->name('no-admin-index');
         Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('no-admin-show');
