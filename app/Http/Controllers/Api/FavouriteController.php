@@ -14,23 +14,23 @@ class FavouriteController extends Controller
 {
 
     public function index(Request $request): JsonResponse
-     {
+    {
 
         try {
-        
-        $user = $request->user();
-        $favourites = Favourite::where('user_id', '=', $user->id)->paginate(5);
 
-        return response()->json([
-            'message' => 'Favourite listed successfully',
-            'data' => $favourites,
-            'status' => 200
-        ]);
-       } catch(\Throwable $th) {
-        return response()->json([
-            'message' => 'You have no favourites',
-            'status' => 200
-        ]);
+            $user = $request->user();
+            $favourites = Favourite::where('user_id', '=', $user?->id)->paginate(5);
+
+            return response()->json([
+                'message' => 'Favourite listed successfully',
+                'data' => $favourites,
+                'status' => 200
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'You have no favourites',
+                'status' => 200
+            ]);
         }
     }
 
@@ -38,23 +38,22 @@ class FavouriteController extends Controller
     public function store(FavouriteRequest $request): JsonResponse
     {
         try {
-        
-        $user = $request->user();
-        $userInput = $request->user()->id;
-        $favourite = Favourite::create( $request->validated());
 
-        return response()->json([
-            'message' => 'Products added to favorites.',
-            'data' => $favourite,
-            'status' => 200
-        ]);
+            $user = $request->user();
+            $userInput = $request->user()?->id;
+            $favourite = Favourite::create($request->validated());
+
+            return response()->json([
+                'message' => 'Products added to favorites.',
+                'data' => $favourite,
+                'status' => 200
+            ]);
         } catch (\Throwable $e) {
             return response()->json([
                 'message' => 'PRoduct already exists in favourite',
                 'status' => 403
             ]);
         }
-        
     }
 
     public function delete(int $id): JsonResponse
@@ -64,7 +63,7 @@ class FavouriteController extends Controller
 
             $favourite = Favourite::findOrFail($id);
             $favourite->delete();
-            
+
 
             return response()->json([
                 'message' => "favourite deleted successfully",
@@ -77,6 +76,5 @@ class FavouriteController extends Controller
                 'status' => 404
             ]);
         }
-    }   
+    }
 }
-

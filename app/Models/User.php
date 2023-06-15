@@ -7,6 +7,7 @@ use App\Models\Property;
 use App\Models\Favourite;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -57,13 +58,12 @@ class User extends Authenticatable
     ];
 
 
-    public function property(): hasMany
+    public function property(): HasMany
     {
-         return $this->hasMany(Property::class);
+        return $this->hasMany(Property::class);
     }
-    public function favourite() : hasMany
+    public function favourite(): hasMany
     {
-         return $this->hasMany(Favourite::class);
+        return $this->hasMany(Favourite::class);
     }
-
 }

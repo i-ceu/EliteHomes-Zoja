@@ -41,8 +41,8 @@ class Property extends Model
     {
         return $this->hasMany(Booking::class);
     }
-    public function favourites() :belongsToMany
+    public function favourites(): BelongsTo
     {
-         return $this->belongsTo(Favourite::class);
+        return $this->belongsTo(Favourite::class);
     }
 }
