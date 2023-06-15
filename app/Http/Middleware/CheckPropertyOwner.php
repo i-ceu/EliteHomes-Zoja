@@ -16,7 +16,7 @@ class CheckPropertyOwner
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $propertyId =  $request->route()->parameter('property');
+        $propertyId =  $request->route()?->parameter('property');
         try {
             $userId = Property::findOrFail($propertyId)->user_id;
         } catch (\Throwable $th) {
@@ -24,7 +24,7 @@ class CheckPropertyOwner
                 'Message' => 'Property not found',
             ], Response::HTTP_NOT_FOUND);
         }
-        $authUserId = $request->user()->id;
+        $authUserId = $request->user()?->id;
 
 
         if ($userId !== $authUserId) return response()->json([

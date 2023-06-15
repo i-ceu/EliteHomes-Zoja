@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
+/** @mixin \App\Models\User  */
+
 class BookingRequest extends FormRequest
 {
     /**
@@ -18,7 +20,7 @@ class BookingRequest extends FormRequest
 
     public function __construct(Request $request)
     {
-        $sender_id = $request->merge(['sender_id' => $request->user()->id]);
+        $sender_id = $request->merge(['sender_id' => $request->user()?->id]);
     }
     /**
      * Get the validation rules that apply to the request.

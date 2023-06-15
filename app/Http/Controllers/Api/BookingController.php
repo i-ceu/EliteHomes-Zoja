@@ -27,7 +27,7 @@ class BookingController extends Controller
         $property = Property::findOrFail($booking->property_id);
         $user = User::findOrFail($property->user_id);
 
-        BookTour::dispatch($user, $property);
+        BookTour::dispatch($user, $property); // @phpstan-ignore-line
 
         return response()->json([
             'message' => "Booking uploaded",

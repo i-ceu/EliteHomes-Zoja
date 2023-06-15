@@ -4,12 +4,13 @@ namespace App\Http\Services;
 
 use Closure;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 
 class UserServices
 {
 
 
-    public function fetchAllUsers()
+    public function fetchAllUsers(): JsonResponse
     {
         try {
             $users = User::all();
@@ -26,7 +27,7 @@ class UserServices
         }
     }
 
-    public function fetchUserById(string $id, Closure $next)
+    public function fetchUserById(string $id, Closure $next): JsonResponse
     {
         try {
             $user  = User::findOrFail($id);
@@ -43,7 +44,7 @@ class UserServices
         }
     }
 
-    public static function fetchUserByEmail(string $email, Closure $next)
+    public static function fetchUserByEmail(string $email, Closure $next): JsonResponse
     {
         try {
             $user  = User::where('email', $email)->firstOrFail();

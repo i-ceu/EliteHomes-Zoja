@@ -16,7 +16,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $user = auth()->user();
-        if (!$user->is_admin) {
+        if (!$user?->is_admin) {
             return response()->json(['message' => 'You are not authorized to access this route'], Response::HTTP_UNAUTHORIZED);
         } else {
             return $next($request);
