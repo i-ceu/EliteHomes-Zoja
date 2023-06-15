@@ -20,12 +20,9 @@ class UserFav
     {
         
         $user = $request->user();
-        echo($user->id);
         $favourites = Favourite::where('user_id', '=', $user->id)->get();
-        // echo($user);
-    // dd($favourites);
 
-        if ($favourites === null ) {
+        if ($favourites == null ) {
         return response()->json([
         'message' => 'You are not authorized to perform this action'
     ], Response::HTTP_UNAUTHORIZED);
