@@ -15,21 +15,21 @@ class PropertyController extends Controller
 {
     //
 
-    public function index()
+    public function index(): JsonResponse
     {
-        return PropertyCollection::collection(Property::paginate(5));
+        return response()->json([PropertyCollection::collection(Property::paginate(5))]);
     }
 
-    public function store(PropertyRequest $request)
+    public function store(PropertyRequest $request): JsonResponse
     {
         $property = Property::create($request->validated());
 
-        return response([
+        return response()->json([
             'data' => new PropertyResource($property)
         ], Response::HTTP_CREATED);
     }
 
-    public function show(int $property)
+    public function show(int $property): JsonResponse
     {
         try {
             $property = Property::findOrFail($property);
@@ -45,14 +45,14 @@ class PropertyController extends Controller
         }
     }
 
-    public function update(Request $request, int $property)
+    public function update(Request $request, int $property): JsonResponse
     {
         try {
             $property = Property::findOrFail($property);
 
             $property->update($request->all());
 
-            return response([
+            return response()->json([
                 'data' => new PropertyResource($property)
             ], Response::HTTP_OK);
         } catch (\Throwable $th) {
@@ -62,7 +62,7 @@ class PropertyController extends Controller
         }
     }
 
-    public function destroy(int $property)
+    public function destroy(int $property): JsonResponse
     {
         try {
             $property = Property::findOrFail($property);

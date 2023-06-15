@@ -15,8 +15,8 @@ class CheckOwnerShipMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $userId =  $request->route()->parameter('id');
-        $authUserId = $request->user()->id;
+        $userId =  $request->route()?->parameter('id');
+        $authUserId = $request->user()?->id;
 
 
         if ($userId !== $authUserId) return response()->json([
