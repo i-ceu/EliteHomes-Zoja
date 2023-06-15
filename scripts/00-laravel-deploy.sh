@@ -13,5 +13,5 @@ php artisan route:cache
 echo "Running migrations..."
 php artisan migrate --force
 
-# echo "Passport install..."
-# php artisan passport:install
+echo "Passport install..."
+php artisan passport:install
