@@ -18,30 +18,16 @@ use Symfony\Component\HttpFoundation\Response;
 class BookingController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    // public function index(Request $request)
-    // {
-    //     echo 'beans';
-    //     echo $request->user()->id;
-    // }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(BookingRequest $request): JsonResponse
     {
         $booking = Booking::create($request->validated());
 
-        //todo 
         $property = Property::findOrFail($booking->property_id);
         $user = User::findOrFail($property->user_id);
 
         BookTour::dispatch($user, $property);
-        //send mail to owner
-        //get landlord object from request
-        //get email and send mail
-
 
         return response()->json([
             'message' => "Booking uploaded",
@@ -66,7 +52,7 @@ class BookingController extends Controller
             return response()->json([
                 'message' => "booking with this id not found ",
                 'status' => 404
-            ]);
+            ], Response::HTTP_NOT_FOUND);
         }
     }
     public function showAllPropertyEnquiries(int $property): JsonResponse
@@ -85,16 +71,6 @@ class BookingController extends Controller
             ], Response::HTTP_NOT_FOUND);
         }
     }
-
-
-
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(Request $request, int $booking)
-    // {
-    //     // no update required
-    // }
 
     /**
      * Remove the specified resource from storage.

@@ -40,19 +40,12 @@ Route::prefix('v1')->group(function () {
 
     //Route for user to get all properties
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
-
-
-    //route for user to update a product
+    //route for user to get one property
     Route::get('/properties/{property}', [PropertyController::class, 'show']);
 
     //All Unprotected routes should be declared here.
     Route::post('/users/{id}', [UserController::class, 'show'])->name('no-auth-user-show');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
-
-    //Route for user to get all properties
-    Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
-    //route for user to update a product
-    Route::get('/properties/{property}', [PropertyController::class, 'show']);
 
 
     //Protected routes for authenticated users
