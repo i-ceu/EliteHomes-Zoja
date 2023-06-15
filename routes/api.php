@@ -69,7 +69,6 @@ Route::prefix('v1')->group(function () {
 
         
         Route::group(['middleware' => [FavOwner::class]], static function () {
-            S
             Route::delete('/favourites/{favourite}', [FavouriteController::class, 'delete'])->name('favourite.delete');
         });
     
