@@ -65,11 +65,9 @@ class CategoryController extends Controller
     public function update(Request $request, int $category): JsonResponse
     {
         try {
-            $category = Category::find($category);
+            $category = Category::findOrFail($category);
 
-            $category->update([
-                'title' => $request->title,
-            ]);
+            $category->update($request->all());
 
             return response()->json([
                 'message' => "Category Updated successfully",

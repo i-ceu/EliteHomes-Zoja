@@ -8,12 +8,13 @@ use App\Http\Requests\{SignupRequest, LoginRequest};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 
 class AuthController extends Controller
 {
-    public function register(SignupRequest $request)
+    public function register(SignupRequest $request): JsonResponse
     {
         $user = User::create($request->validated());
 
@@ -25,7 +26,7 @@ class AuthController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): JsonResponse
     {
         $user = User::where('email', $request->email)->first();
 
@@ -41,6 +42,8 @@ class AuthController extends Controller
             'lastName' => $user->last_name,
             'profilePicture' => $user->profile_picture,
         ];
+
+        $user->full_name = $user->first_name . ' ' . $user->last_name; // @phpstan-ignore-line
 
         $token = $user->createToken("$user->full_name token")->accessToken;
 

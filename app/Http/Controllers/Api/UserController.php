@@ -25,7 +25,7 @@ class UserController extends Controller
     }
 
     //Display a specific user
-    public function show(string $user)
+    public function show(string $user): JsonResponse
     {
         try {
 
@@ -47,7 +47,7 @@ class UserController extends Controller
 
 
 
-    public function update(Request $request, string $user)
+    public function update(Request $request, string $user): JsonResponse
     {
         try {
             //code...
