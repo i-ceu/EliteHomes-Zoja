@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
+/** @mixin \App\Models\User  */
+
 class PropertyRequest extends FormRequest
 {
     /**
@@ -18,7 +20,7 @@ class PropertyRequest extends FormRequest
     public function __construct(Request $request)
     {
         $request->merge([
-            'user_id' => $request->user()->id,
+            'user_id' => $request->user()?->id,
             'property_other_image_url' => json_encode($request->property_other_image_url)
         ]);
     }
