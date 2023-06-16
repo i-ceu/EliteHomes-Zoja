@@ -80,39 +80,51 @@
 
 ### Get All Properties
 
--   URL: /api/properties
+-   URL: /api/v1/properties
 -   Method: GET
 -   Description: Get all properties.
 
 ### Get Specific Property
 
--   URL: /api/properties/{id}
+-   URL: /api/v1/properties/{id}
 -   Method: GET
 -   Description: Get a specific property by ID.
 
 ### Create New Property
 
--   URL: /api/properties
+-   URL: /api/v1/properties
 -   Method: POST
 -   Description: Create a new property.
 
 ### Update Property Details
 
--   URL: /api/properties/{id}
+-   URL: /api/v1/properties/{id}
 -   Method: PUT
 -   Description: Update a property's details.
 
 ### Delete Property
 
--   URL: /api/properties/{id}
+-   URL: /api/v1/properties/{id}
 -   Method: DELETE
 -   Description: Delete a property.
 
 ### Get Property Photos
 
--   URL: /api/properties/{id}/photos
+-   URL: /api/v1/properties/{id}/photos
 -   Method: GET
 -   Description: Get all photos of a specific property.
+
+### Get Details of Property Owner
+
+- URL: /api/v1/properties/{id}/user
+
+- Method: GET
+-Description: Returns the details of owner of a particular property.
+
+### Get List of Properties by a single Owner
+- URL: /api/v1user/{id}/properties
+-Method: GET
+-Description: Returns the list of all properties a user has created.
 
 ### Upload Property Photo
 
@@ -191,19 +203,19 @@
 
 ### Add a Property to the User's Favorites List
 
--   URL: /api/favorites/properties/{id}
+-   URL: /api/favourites/
     -Method: POST
 -   Description: Add a property to the user's favorites list.
 
 ### Remove a Property from the User's Favorites List
 
--   URL: /api/favorites/properties/{id}
+-   URL: /api/favourites/{id}
 -   Method: DELETE
 -   Description: Remove a property from the user's favorites list.
 
 ### Get the List of Properties in the User's Favorites List
 
--   URL: /api/favorites/properties
+-   URL: /api/v1/user/favourites
 -   Method: GET
 -   Description: Get the list of properties in the user's favorites list.
 
