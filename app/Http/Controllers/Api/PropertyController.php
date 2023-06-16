@@ -7,6 +7,7 @@ use App\Http\Resources\PropertyCollection;
 use App\Http\Resources\PropertyResource;
 use App\Http\Controllers\Controller;
 use App\Models\Property;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,23 @@ class PropertyController extends Controller
         ], Response::HTTP_CREATED);
     }
 
+    public function userindex(Request $request, User $user): JsonResponse
+    {
+        try {
+            $user = $request->user();
+            // echo $userId->id;
+            $property = Property::where('user_id', $user->id)->get();
+            // echo($property);
+            return response()->json([
+                'Message' => 'User Property Found',
+                'data' => PropertyCollection::collection($property)
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'Message' => 'This User has no Property',
+            ], Response::HTTP_NOT_FOUND);
+        }
+    }
     public function show(int $property): JsonResponse
     {
         try {
