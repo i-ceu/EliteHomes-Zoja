@@ -29,15 +29,18 @@ class PropertyController extends Controller
             'data' => new PropertyResource($property)
         ], Response::HTTP_CREATED);
     }
-    public function userindex( User $user):JsonResponse
+    public function userindex( Request $request, User $user):JsonResponse
     {
         try {
-            $property = Property::where('user_id', $user->id)->get();
-
+            $userId = $request->user();
+            // echo $userId->id;
+            $property = Property::where('user_id', $userId->id)->get();
+            // echo($property);
             return response()->json([
                 'Message'=> 'User Property Found',
                 'data'=> $property], Response::HTTP_OK);
-        } catch (\Throwable $th) {
+        } 
+        catch (\Throwable $th) {
             return response()->json([
                 'Message' => 'This User has no Property',
             ], Response::HTTP_NOT_FOUND);

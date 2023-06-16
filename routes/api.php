@@ -71,14 +71,9 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::group(['middleware'  => ['auth:api']], static function (){
-            Route::group(['middleware' => [IsLandlord::class]], static function () {
-                Route::group(['middleware' => [CheckPropertyOwner::class]], static function () {
-                    Route::get('/users/{id}/properties', [PropertyController::class, 'userindex'])->name('properties.userindex');
-                });
-            });
+            Route::get('/users/{id}/properties', [PropertyController::class, 'userindex'])->name('properties.userindex');
         });
-
-
+        
 
         Route::get('/categories', [CategoryController::class, 'index'])->name('no-admin-index');
         Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('no-admin-show');
