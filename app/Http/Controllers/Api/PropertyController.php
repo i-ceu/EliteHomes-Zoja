@@ -15,9 +15,9 @@ class PropertyController extends Controller
 {
     //
 
-    public function index(): JsonResponse
+    public function index()
     {
-        return response()->json([PropertyCollection::collection(Property::paginate(5))]);
+        return PropertyCollection::collection(Property::paginate(6));
     }
 
     public function store(PropertyRequest $request): JsonResponse
