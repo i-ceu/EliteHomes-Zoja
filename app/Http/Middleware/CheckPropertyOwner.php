@@ -19,6 +19,7 @@ class CheckPropertyOwner
         $propertyId =  $request->route()?->parameter('property');
         try {
             $userId = Property::findOrFail($propertyId)->user_id;
+
         } catch (\Throwable $th) {
             return response()->json([
                 'Message' => 'Property not found',

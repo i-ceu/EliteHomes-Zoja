@@ -53,7 +53,7 @@ Route::prefix('v1')->group(function () {
 
     //Route for user to get all properties
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
-    //route for user to update a product
+    //route for user to show a product
     Route::get('/properties/{property}', [PropertyController::class, 'show']);
 
     //Protected routes for authenticated users
@@ -70,7 +70,10 @@ Route::prefix('v1')->group(function () {
             Route::get('/properties/{property}/bookings', [BookingController::class, 'showAllPropertyEnquiries'])->name('show-all-property-enquiries');
         });
 
-
+        Route::group(['middleware'  => ['auth:api']], static function (){
+            Route::get('/users/{id}/properties', [PropertyController::class, 'userindex'])->name('properties.userindex');
+        });
+        
 
         Route::get('/categories', [CategoryController::class, 'index'])->name('no-admin-index');
         Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('no-admin-show');
