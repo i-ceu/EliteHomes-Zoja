@@ -80,6 +80,27 @@ class PropertyController extends Controller
             ], Response::HTTP_NOT_FOUND);
         }
     }
+    public function getOwnerDetails(Property $property)
+    {
+        try{
+            //"full_name" = $user->first_name '.' $user->last_name;
+            $owner = $property->user;
+            return response()->json([
+                'message' => 'User details found',
+                'first name'=> $owner->first_name,
+                'last name'=> $owner->last_name,
+                'phone number'=>$owner->phone_number,
+                'email'=>$owner->email,
+
+            ], Response::HTTP_OK);
+
+        }catch(\Throwable $th){
+            return response()->json([
+                'Message' => 'User details not Found'
+            ], Response::HTTP_NOT_FOUND);
+        }
+        
+    }
 
     public function destroy(int $property): JsonResponse
     {

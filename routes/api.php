@@ -51,11 +51,6 @@ Route::prefix('v1')->group(function () {
     Route::post('/users/{id}', [UserController::class, 'show'])->name('no-auth-user-show');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
 
-    //Route for user to get all properties
-    Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
-    //route for user to show a product
-    Route::get('/properties/{property}', [PropertyController::class, 'show']);
-
     //Protected routes for authenticated users
     Route::group(['middleware'  => ['auth:api']], static function () {
 
@@ -72,8 +67,9 @@ Route::prefix('v1')->group(function () {
 
         Route::group(['middleware'  => ['auth:api']], static function (){
             Route::get('/users/{id}/properties', [PropertyController::class, 'userindex'])->name('properties.userindex');
+            Route::get('properties/{property}/user/',[PropertyController::class, 'getOwnerDetails' ] )->name('properties.getOwnerDetails');
         });
-        
+        // Route::get('properties/{property}/users/',[PropertyController::class, 'getOwnerDetails' ] )->name('properties.getOwnerDetails');
 
         Route::get('/categories', [CategoryController::class, 'index'])->name('no-admin-index');
         Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('no-admin-show');
@@ -86,7 +82,7 @@ Route::prefix('v1')->group(function () {
         });
     
         Route::group(['middleware' => [UserFav::class]], static function () {
-            Route::get('/favourites', [FavouriteController::class, 'index'])->name('favourite.index');
+            Route::get('/user/favourites', [FavouriteController::class, 'index'])->name('favourite.index');
         });
 
         // All Admin routes should be declared here
