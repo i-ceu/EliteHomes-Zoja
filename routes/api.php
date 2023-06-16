@@ -48,7 +48,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/properties/{property}', [PropertyController::class, 'show']);
 
     //All Unprotected routes should be declared here.
-    Route::post('/users/{id}', [UserController::class, 'show'])->name('no-auth-user-show');
+    Route::get('/users/{id}', [UserController::class, 'show'])->name('no-auth-user-show');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
 
     //Route for user to get all properties
@@ -89,7 +89,6 @@ Route::prefix('v1')->group(function () {
             Route::get('/favourites', [FavouriteController::class, 'index'])->name('favourite.index');
         });
 
-        Route::apiResource('/categories', CategoryController::class)->name('Admin', 'Categories');
         // All Admin routes should be declared here
         Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function () {
             Route::apiResource('/categories', CategoryController::class)->name('Admin', 'Categories');
