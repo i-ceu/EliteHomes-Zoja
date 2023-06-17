@@ -60,7 +60,7 @@ class User extends Authenticatable
 
     public function property(): HasMany
     {
-        return $this->hasMany(Property::class);
+        return $this->hasMany(Property::class, 'user_id');
     }
     public function favourite(): hasMany
     {

@@ -43,36 +43,12 @@ Route::prefix('v1')->group(function () {
     Route::post('/users/{id}', [UserController::class, 'show'])->name('no-auth-user-show');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
 
-    //UNPROTECTED PROPERTY ROUTES
-    Route::prefix('properties')->group(function () {
-        Route::get('/{property}', [PropertyController::class, 'show']);
-        Route::get('/', [PropertyController::class, 'index'])->name('properties.index');
-    });
-
-
     //Protected routes for authenticated users
     Route::group(['middleware'  => ['auth:api']], static function () {
 
-        //BOOKING ROUTES
-        Route::apiResource('/booking', BookingController::class);
-
-        //CATEGORY ROUTES
-        Route::prefix('categories')->group(function () {
-            Route::get('/', [CategoryController::class, 'index'])->name('no-admin-index');
-            Route::get('/{category}', [CategoryController::class, 'show'])->name('no-admin-show');
-        });
-
-
-        //FAVOURITE ROUTES
-        Route::prefix('favourites')->group(function () {
-            Route::post('/favourites', [FavouriteController::class, 'store'])->name('favourite.store');
-            Route::group(['middleware' => [FavOwner::class]], static function () {
-                Route::delete('/{favourite}', [FavouriteController::class, 'delete'])->name('favourite.delete');
-            });
-
-            Route::group(['middleware' => [UserFav::class]], static function () {
-                Route::get('/', [FavouriteController::class, 'index'])->name('favourite.index');
-            });
+        Route::group(['middleware' => [IsLandlord::class]], static function () {
+            //route for user to store a product
+            Route::post('/properties', [PropertyController::class, 'store'])->name('properties.store');
         });
 
 
@@ -84,22 +60,50 @@ Route::prefix('v1')->group(function () {
                 Route::delete('/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
                 Route::get('/{property}/bookings', [BookingController::class, 'showAllPropertyEnquiries'])->name('show-all-property-enquiries');
             });
-            Route::group(['middleware' => [IsLandlord::class]], static function () {
-                //route for user to store a product
-                Route::post('/', [PropertyController::class, 'store'])->name('properties.store');
+
+            Route::get('properties/{property}/user/', [PropertyController::class, 'getOwnerDetails'])->name('properties.getOwnerDetails');
+        });
+
+
+
+        //BOOKING ROUTES
+        Route::apiResource('/booking', BookingController::class);
+
+        //CATEGORY ROUTES
+        Route::prefix('categories')->group(function () {
+            Route::get('/', [CategoryController::class, 'index'])->name('no-admin-index');
+            Route::get('/{category}', [CategoryController::class, 'show'])->name('no-admin-show');
+
+            Route::group(['middleware' => [UserFav::class]], static function () {
+                Route::get('/user/favourites', [FavouriteController::class, 'index'])->name('favourite.index');
             });
         });
 
 
 
 
+        //PROPERTY ROUTES
+        Route::prefix('properties')->group(function () {
+            Route::group(['middleware' => [CheckPropertyOwner::class]], static function () {
+                Route::put('/{property}', [PropertyController::class, 'update'])->name('properties.update');
+                //
+                Route::delete('/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
+                Route::get('/{property}/bookings', [BookingController::class, 'showAllPropertyEnquiries'])->name('show-all-property-enquiries');
+            });
+            Route::group(['middleware' => [IsLandlord::class]], static function () {
 
-        // All Admin routes should be declared here
+                Route::post('/', [PropertyController::class, 'store'])->name('properties.store');
+            });
+        });
+
+
+        // ADMIN ROUTES
         Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function () {
             Route::apiResource('/categories', CategoryController::class)->name('Admin', 'Categories');
             Route::apiResource('/users', UserController::class)->name('Admin', 'users');
         });
 
+        //USR ROUTES
         Route::group(['prefix' => 'users'],  static function () {
             Route::get('/{id}/reviews', [UserController::class, 'reviews'])->name('users.reviews');
 
@@ -107,6 +111,8 @@ Route::prefix('v1')->group(function () {
                 Route::put('/{id}', [UserController::class, 'update'])->name('user-update-self');
                 Route::delete('/{id}', [UserController::class, 'destroy'])->name('users-delete-self');
             });
+
+            Route::get('/{id}/properties', [PropertyController::class, 'userindex'])->name('properties.userindex');
         });
     });
 });

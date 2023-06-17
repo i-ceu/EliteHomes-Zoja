@@ -33,11 +33,13 @@ class PropertyResource extends JsonResource
             'property_toilet_number' => $this->property_toilet_number,
             'property_plan_image_url' => $this->property_plan_image_url,
             'property_other_image_url' => json_decode($this->property_other_image_url),
-            'href' => [
-                'categories' => route('categories.show', $this->category_id)
+            'property_owner' => [
+                'user_id' => $this->user_id,
+                'full_name' => $this->user->first_name . ' ' . $this->user->last_name,
+                'phone_number' => $this->user->phone_number,
+                'email' => $this->user->email,
+                'profile_picture' => $this->user->profile_picture,
             ]
-
-
         ];
     }
 }
