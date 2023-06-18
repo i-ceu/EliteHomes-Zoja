@@ -55,6 +55,10 @@ class UserController extends Controller
 
             $user->update($request->all());
 
+            if ($request->hasFile('profile_picture')) {
+                $user->addMediaFromRequest('profile_picture')->toMediaCollection('avatars');
+            }
+
             return response()->json([
                 'Message' => 'User updated successfully',
                 'data' => new UserResource($user),

@@ -11,10 +11,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuids;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids, InteractsWithMedia;
 
     public $incrementing = false;
 
@@ -23,6 +26,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    public function getMediaDirectory(): string
+    {
+        // You can customize the folder structure here
+        return 'avatars/' . $this->id;
+    }
     protected $fillable = [
         'username',
         'email',

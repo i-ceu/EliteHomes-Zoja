@@ -23,8 +23,31 @@ class PropertyController extends Controller
 
     public function store(PropertyRequest $request): JsonResponse
     {
-        $property = Property::create($request->validated());
+        $request->validated();
+        $property = Property::create(
+            [
+                'user_id' => $request->user_id,
+                'property_name' => $request->property_name,
+                'property_address' => $request->property_address,
+                'property_price' => $request->property_price,
+                'property_stock' => $request->property_stock == 0 ? 'Property Unavailable' : $request->property_stock,
+                'category_id' => $request->category_id,
+                'property_description' => $request->property_description,
+                'property_total_floor_area' => $request->property_total_floor_area,
+                'property_bedroom_number' => $request->property_bedroom_number,
+                'property_toilet_number' => $request->property_toilet_number,
+            ]
+        );
 
+        if ($request->hasFile('property_plan_image_url')) {
+            $property->addMediaFromRequest('property_plan_image_url')->toMediaCollection('floor_plans', 'floor_plans');
+        }
+
+        if ($request->hasFile('property_other_image_url')) {
+            $property->addMultipleMediaFromRequest(['property_other_image_url'])->each(function ($photo) {
+                $photo->toMediaCollection('propertyPictures', 'property_images');
+            });
+        }
         return response()->json([
             'data' => new PropertyResource($property)
         ], Response::HTTP_CREATED);
@@ -51,7 +74,7 @@ class PropertyController extends Controller
     {
         try {
             $property = Property::findOrFail($property);
-
+            // echo $property;
             return response()->json([
                 'Message' => 'Property Found',
                 'data' => new PropertyResource($property),
@@ -81,24 +104,22 @@ class PropertyController extends Controller
     }
     public function getOwnerDetails(Property $property)
     {
-        try{
+        try {
             //"full_name" = $user->first_name '.' $user->last_name;
             $owner = $property->user;
             return response()->json([
                 'message' => 'User details found',
-                'first name'=> $owner->first_name,
-                'last name'=> $owner->last_name,
-                'phone number'=>$owner->phone_number,
-                'email'=>$owner->email,
+                'first name' => $owner->first_name,
+                'last name' => $owner->last_name,
+                'phone number' => $owner->phone_number,
+                'email' => $owner->email,
 
             ], Response::HTTP_OK);
-
-        }catch(\Throwable $th){
+        } catch (\Throwable $th) {
             return response()->json([
                 'Message' => 'User details not Found'
             ], Response::HTTP_NOT_FOUND);
         }
-        
     }
 
     public function destroy(int $property): JsonResponse

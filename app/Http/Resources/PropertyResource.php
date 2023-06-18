@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
 
 /** @mixin \App\Models\Property  */
 
@@ -31,8 +33,10 @@ class PropertyResource extends JsonResource
             'property_total_floor_area' => $this->property_total_floor_area,
             'property_bedroom_number' => $this->property_bedroom_number,
             'property_toilet_number' => $this->property_toilet_number,
-            'property_plan_image_url' => $this->property_plan_image_url,
-            'property_other_image_url' => json_decode($this->property_other_image_url),
+            'property_plan_image_url' => $this->getFirstMediaPath('floor_plans'),
+            'property_other_image_url' => $this->getMedia('propertyPictures')->map(function (Media $media) {
+                return $media->getPath();
+            })->toArray(),
             'property_owner' => [
                 'user_id' => $this->user_id,
                 'full_name' => $this->user->first_name . ' ' . $this->user->last_name,
