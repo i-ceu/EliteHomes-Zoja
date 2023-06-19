@@ -36,12 +36,13 @@ return [
         'X-PINGOTHER',
         'Content-Type',
         'Origin, X-Requested-With, Content-Type, Accept',
-        '*'
+        'X-Requested-With,Content-Type, X-Token-Auth,Authorization',
+
     ],
 
     'exposed_headers' => [],
 
-    'max_age' => 0,
+    'max_age' => 3600,
 
     'supports_credentials' => true,
 
