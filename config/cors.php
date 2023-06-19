@@ -35,9 +35,14 @@ return [
         'Upgrade-Insecure-Requests',
         'X-PINGOTHER',
         'Content-Type',
+        'Content-Length',
+        'Host',
+        'User-Agent',
+        'Accept-Encoding',
+        'Connection',
         'Origin, X-Requested-With, Content-Type, Accept',
         'X-Requested-With,Content-Type, X-Token-Auth,Authorization',
-
+        '*'
     ],
 
     'exposed_headers' => [],
