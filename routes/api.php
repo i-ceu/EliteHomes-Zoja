@@ -42,7 +42,7 @@ Route::prefix('v1')->group(function () {
     //All Unprotected routes should be declared here.
     Route::get('/users/{id}', [UserController::class, 'show'])->name('no-auth-user-show');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
-    Route::get('/', [PropertyController::class, 'index'])->name('properties.index');
+    Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
 
     //Protected routes for authenticated users
     Route::group(['middleware'  => ['auth:api']], static function () {
