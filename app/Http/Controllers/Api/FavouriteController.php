@@ -37,23 +37,13 @@ class FavouriteController extends Controller
 
     public function store(FavouriteRequest $request): JsonResponse
     {
-        try {
-        
-        $user = $request->user();
-        $userInput = $request->user()->id;
-        $favourite = Favourite::create( $request->validated());
-
+         
+       $favourite = Favourite::firstOrCreate($request->validated());
         return response()->json([
             'message' => 'Products added to favorites.',
             'data' => $favourite,
             'status' => 200
         ]);
-        } catch (\Throwable $e) {
-            return response()->json([
-                'message' => 'PRoduct already exists in favourite',
-                'status' => 403
-            ]);
-        }
         
     }
 
