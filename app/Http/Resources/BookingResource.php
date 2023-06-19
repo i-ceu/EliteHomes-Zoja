@@ -18,12 +18,12 @@ class BookingResource extends JsonResource
     {
         return [
             "id" => strval($this->id),
-            'type' => 'booking',
             'attributes' => [
                 'name' => $this->name,
                 'message' => $this->message,
                 'email' => $this->email,
                 'property' => $this->property?->property_name,
+                'propertyOwner' => $this->property?->user?->username,
                 'sender' => $this->sender?->username
             ],
 

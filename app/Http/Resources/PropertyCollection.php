@@ -18,6 +18,7 @@ class PropertyCollection extends JsonResource
     {
         //return parent::toArray($request);
         return [
+            "id" => strval($this->id),
             'property_name' => $this->property_name,
             'property_address' => $this->property_address,
             'property_price' => $this->property_price,
@@ -27,7 +28,7 @@ class PropertyCollection extends JsonResource
             'property_total_floor_area' => $this->property_total_floor_area,
             'property_bedroom_number' => $this->property_bedroom_number == 0 ? 'No Bedroom' : $this->property_bedroom_number,
             'property_toilet_number' => $this->property_toilet_number == 0 ? 'No Toilet' : $this->property_toilet_number,
-            'user_id' => $this->user_id,
+            'property_other_image_url' => json_decode($this->property_other_image_url),
         ];
     }
 }
