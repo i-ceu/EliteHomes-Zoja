@@ -4,6 +4,10 @@ composer self-update --2
 # composer global require hirak/prestissimo
 composer install --ignore-platform-reqs --no-dev --working-dir=/var/www/html/
 
+echo "Clear cache"
+php artisan route:clear
+php artisan cache:clear
+
 echo "Caching config..."
 php artisan config:cache
 

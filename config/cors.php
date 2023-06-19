@@ -17,7 +17,7 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['POST', 'GET', 'DELETE', 'PUT', '*'],
+    'allowed_methods' => ['POST', 'GET', 'DELETE', 'PUT', 'OPTIONS', '*'],
 
     'allowed_origins' => [
         'https://elite-homes.vercel.app',
@@ -30,7 +30,14 @@ return [
 
     'allowed_origins_patterns' => ['*'],
 
-    'allowed_headers' => ['*'],
+    'allowed_headers' => [
+        'X-Custom-Header',
+        'Upgrade-Insecure-Requests',
+        'X-PINGOTHER',
+        'Content-Type',
+        'Origin, X-Requested-With, Content-Type, Accept',
+        '*'
+    ],
 
     'exposed_headers' => [],
 
