@@ -61,7 +61,26 @@ class BookingController extends Controller
             $allBookings = Booking::where('property_id', $property)->get();
             return response()->json([
                 'message' => "bookings showed successfully",
-                'data' => new BookingResource($allBookings),
+                'data' => BookingResource::collection($allBookings),
+                'status' => 200
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => "booking with this id not found ",
+                'status' => 404
+            ], Response::HTTP_NOT_FOUND);
+        }
+    }
+
+    public function showAllUserEnquiries(string $id): JsonResponse
+    {
+        try {
+            $allBookings = Booking::where('sender_id', $id)->get();
+            // ->through(fn ($booking) => new BookingResource($booking));
+            // echo $allBookings;
+            return response()->json([
+                'message' => "bookings showed successfully",
+                'data' => BookingResource::collection($allBookings),
                 'status' => 200
             ]);
         } catch (\Throwable $th) {

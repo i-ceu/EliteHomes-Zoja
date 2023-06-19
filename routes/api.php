@@ -106,6 +106,8 @@ Route::prefix('v1')->group(function () {
             Route::group(['middleware' => [CheckOwnerShipMiddleware::class]], static function () {
                 Route::put('/{id}', [UserController::class, 'update'])->name('user-update-self');
                 Route::delete('/{id}', [UserController::class, 'destroy'])->name('users-delete-self');
+
+                Route::get('/{id}/bookings', [BookingController::class, 'showAllUserEnquiries'])->name('show-user-bookings');
             });
 
             Route::get('/{id}/properties', [PropertyController::class, 'userindex'])->name('properties.userindex');
