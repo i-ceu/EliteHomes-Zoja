@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\{
     CategoryController,
     FavouriteController
 };
-use App\Http\Middleware\{AdminMiddleware, CheckOwnerShipMiddleware, CheckPropertyOwner, FavOwner, IsLandlord, UserFav};
+use App\Http\Middleware\{CheckOwnerShipMiddleware, CheckPropertyOwner, FavOwner, UserFav};
 
 /*
 |--------------------------------------------------------------------------
@@ -45,11 +45,6 @@ Route::prefix('v1')->group(function () {
 
     //Protected routes for authenticated users
     Route::group(['middleware'  => ['auth:api']], static function () {
-
-        Route::group(['middleware' => [IsLandlord::class]], static function () {
-            //route for user to store a product
-            Route::post('/properties', [PropertyController::class, 'store'])->name('properties.store');
-        });
 
 
         //PROPERTY ROUTES
@@ -90,15 +85,16 @@ Route::prefix('v1')->group(function () {
                 Route::delete('/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
                 Route::get('/{property}/bookings', [BookingController::class, 'showAllPropertyEnquiries'])->name('show-all-property-enquiries');
             });
-            Route::group(['middleware' => [IsLandlord::class]], static function () {
 
+            Route::group(['middleware' => ['role:is_landlord']], static function () {
+                //route for user to store a product
                 Route::post('/', [PropertyController::class, 'store'])->name('properties.store');
             });
         });
 
 
         // ADMIN ROUTES
-        Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function () {
+        Route::prefix('admin')->middleware(['role:is_admin'])->group(function () {
             Route::apiResource('/categories', CategoryController::class)->name('Admin', 'Categories');
             Route::apiResource('/users', UserController::class)->name('Admin', 'users');
         });
