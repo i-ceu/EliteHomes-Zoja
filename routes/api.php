@@ -9,9 +9,11 @@ use App\Http\Controllers\Api\{
     UserController,
     PropertyController,
     CategoryController,
-    FavouriteController
+    FavouriteController,
+    ReviewsController
+
 };
-use App\Http\Middleware\{AdminMiddleware, CheckOwnerShipMiddleware, CheckPropertyOwner, FavOwner, IsLandlord, UserFav};
+use App\Http\Middleware\{AdminMiddleware, CheckOwnerShipMiddleware, CheckPropertyOwner, FavOwner, IsLandlord, UserFav, ReviewsOwner};
 
 /*
 |--------------------------------------------------------------------------
@@ -41,8 +43,17 @@ Route::prefix('v1')->group(function () {
 
      // Route for user to store a favourite
      Route::post('/favourites', [FavouriteController::class, 'store'])->name('favourite.store');
+
+     Route::group(['middleware' => [ReviewsOwner::class]], static function () {
+     Route::get('/{propertyId}', [ReviewsController::class, 'index']);   
+        //Route for user to create a review
+     Route::post('/{propertyId}', [ReviewsController::class, 'store']);
+     //Route for user to update a review
+     Route::put('/{reviewId}', [ReviewsController::class, 'update']);
+     //Route for user to delete a review
+     Route::delete('/{reviewId}', [ReviewsController::class, 'destroy']);
+     });
     //Route for user to get all properties
-    
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
     //route for user to get one property
     Route::get('/properties/{property}', [PropertyController::class, 'show']);
@@ -70,8 +81,6 @@ Route::prefix('v1')->group(function () {
             Route::get('/properties/{property}/bookings', [BookingController::class, 'showAllPropertyEnquiries'])->name('show-all-property-enquiries');
         });
 
-
-
         Route::get('/categories', [CategoryController::class, 'index'])->name('no-admin-index');
         Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('no-admin-show');
 
@@ -93,6 +102,8 @@ Route::prefix('v1')->group(function () {
 
 
         });
+
+    
 
         Route::group(['prefix' => 'users'],  static function () {
             Route::get('/{id}/reviews', [UserController::class, 'reviews'])->name('users.reviews');
