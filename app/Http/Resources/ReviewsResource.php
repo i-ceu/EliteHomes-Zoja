@@ -24,6 +24,6 @@ class ReviewsResource extends JsonResource
                 'user_id' => $this->user_id,
                 'property_id' => $this->property_id
             ]
-       ]
+            ];
         }
 }
