@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Models\Property;
 use App\Models\Reviews;
 use Illuminate\Http\Request;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ReviewsRequest;
@@ -33,7 +32,7 @@ class ReviewsController extends Controller
         ]);
 
         // Create a new review
-        $review = new Review;
+        $review = new Reviews;
         $review->property_id = $propertyId;
         $review->user_id = auth()->id(); // Assuming you have authentication set up
         $review->rating = $validatedData['rating'];
@@ -47,7 +46,7 @@ class ReviewsController extends Controller
     public function update(Request $request, $reviewId)
     {
         // Find the review
-        $review = Review::findOrFail($reviewId);
+        $review = Reviews::findOrFail($reviewId);
 
         $validatedData = $request->validate([
             'rating' => 'required|integer|between:1,5',
@@ -66,7 +65,7 @@ class ReviewsController extends Controller
     public function destroy($reviewId)
     {
         // Find the review
-        $review = Review::findOrFail($reviewId);
+        $review = Reviews::findOrFail($reviewId);
 
         // Authorize the user to delete the review if needed
         // Add your authorization logic here, e.g., checking if the authenticated user owns the review
