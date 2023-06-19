@@ -17,14 +17,15 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
+    'allowed_methods' => ['POST', 'GET', 'DELETE', 'PUT', '*'],
 
     'allowed_origins' => [
         'https://elite-homes.vercel.app',
         'https://elite-homes-zojatech.netlify.app',
         'http://127.0.0.1:5173',
         'http://127.0.0.1:5174',
-        'http://localhost:19006'
+        'http://localhost:19006' .
+            '*'
     ],
 
     'allowed_origins_patterns' => ['*'],

@@ -22,7 +22,12 @@ class BookingResource extends JsonResource
                 'name' => $this->name,
                 'message' => $this->message,
                 'email' => $this->email,
-                'property' => $this->property?->property_name,
+                'property_id' => $this->property?->id,
+                'property_name' => $this->property?->property_name,
+                'property_address' => $this->property?->property_address,
+                'property_category' => $this->property?->category->title,
+                'property_description' => $this->property?->property_description,
+                'property__other_image_url' => json_decode($this->property?->property_other_image_url),
                 'propertyOwner' => $this->property?->user?->username,
                 'sender' => $this->sender?->username
             ],

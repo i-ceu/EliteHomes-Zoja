@@ -64,7 +64,8 @@ Route::prefix('v1')->group(function () {
 
 
         //BOOKING ROUTES
-        Route::apiResource('/booking', BookingController::class);
+        Route::post('/booking', [BookingController::class, 'store'])->name('create-booking');
+        Route::get('/booking/{booking}', [BookingController::class, 'show'])->name('show-booking');
 
         //CATEGORY ROUTES
         Route::prefix('categories')->group(function () {
