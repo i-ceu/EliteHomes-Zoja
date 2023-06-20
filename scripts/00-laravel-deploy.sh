@@ -7,7 +7,7 @@ composer install --ignore-platform-reqs --no-dev --working-dir=/var/www/html/
 echo "Clear cache"
 php artisan route:clear
 php artisan cache:clear
-composer  -o dump-autoload
+# composer  -o dump-autoload
 
 echo "Caching config..."
 php artisan config:cache
