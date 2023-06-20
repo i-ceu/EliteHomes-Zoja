@@ -12,7 +12,12 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+use App\Http\Controllers\ReviewController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::post('/properties/{property}/reviews', [ReviewController::class, 'store']);
+Route::put('/properties/{property}/reviews/{review}', [ReviewController::class, 'update']);
+Route::delete('/properties/{property}/reviews/{review}', [ReviewController::class, 'destroy']);
+Route::get('/properties/{property}/reviews', [ReviewController::class, 'index']);
+{
+    
+};
