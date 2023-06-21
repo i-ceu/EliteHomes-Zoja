@@ -18,7 +18,7 @@ class PropertyController extends Controller
 
     public function index()
     {
-        return PropertyCollection::collection(Property::paginate(6));
+        return PropertyResource::collection(Property::orderByDesc('id')->get());
     }
 
     public function store(PropertyRequest $request): JsonResponse
