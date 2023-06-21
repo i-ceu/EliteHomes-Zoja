@@ -9,9 +9,11 @@ use App\Http\Controllers\Api\{
     UserController,
     PropertyController,
     CategoryController,
-    FavouriteController
+    FavouriteController,
+    ReviewsController
+
 };
-use App\Http\Middleware\{CheckOwnerShipMiddleware, CheckPropertyOwner, FavOwner, UserFav};
+use App\Http\Middleware\{CheckOwnerShipMiddleware, CheckPropertyOwner, FavOwner, UserFav, ReviewsOwner};
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +46,8 @@ Route::prefix('v1')->group(function () {
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
     Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
+
+
 
     //Protected routes for authenticated users
     Route::group(['middleware'  => ['auth:api']], static function () {
@@ -94,6 +98,18 @@ Route::prefix('v1')->group(function () {
                 Route::post('/', [PropertyController::class, 'store'])->name('properties.store');
             });
         });
+
+        
+    //REVIEWS
+
+    Route::get('/properties/{property}/reviews', [ReviewsController::class, 'index']);
+Route::post('/properties/reviews', [ReviewsController::class, 'store']);
+
+Route::group(['middleware' => [ReviewsOwner::class]], function (){
+    
+    Route::put('/properties/reviews/{review}', [ReviewsController::class, 'update']);
+    Route::delete('/properties/reviews/{review}', [ReviewsController::class, 'destroy']);
+});
 
 
         // ADMIN ROUTES

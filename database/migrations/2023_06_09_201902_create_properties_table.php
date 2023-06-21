@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignUuid('user_id')->constrained('users')->cascadeOnDelete();
+           $table->foreignUuid('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('property_name');
             $table->string('property_address');
             $table->double('property_price');
