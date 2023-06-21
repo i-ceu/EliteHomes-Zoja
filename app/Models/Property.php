@@ -47,4 +47,8 @@ class Property extends Model implements HasMedia
     {
         return $this->belongsTo(Favourite::class);
     }
+    public function reviews(): BelongsTo
+    {
+        return $this->belongsTo(Reviews::class);
+    }
 }
