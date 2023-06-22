@@ -22,7 +22,6 @@ class PropertyResource extends JsonResource
 
         return [
             "id" => strval($this->id),
-            "type" => 'property',
             'user_id' => $this->user_id,
             'property_name' => $this->property_name,
             'property_address' => $this->property_address,

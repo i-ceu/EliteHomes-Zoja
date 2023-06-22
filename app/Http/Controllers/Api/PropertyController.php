@@ -10,7 +10,9 @@ use App\Models\Property;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+
 
 class PropertyController extends Controller
 {
@@ -48,6 +50,7 @@ class PropertyController extends Controller
                 $photo->toMediaCollection('propertyPictures', 'property_images');
             });
         }
+        echo $property;
         return response()->json([
             'data' => new PropertyResource($property)
         ], Response::HTTP_CREATED);
@@ -90,15 +93,30 @@ class PropertyController extends Controller
     {
         try {
             $property = Property::findOrFail($property);
-
             $property->update($request->all());
+
+            if ($request->hasFile('property_plan_image_url')) {
+                $image = $property->getFirstMedia('floor_plans');
+                $property->clearMediaCollection('floor_plans');
+                $property->addMediaFromRequest('property_plan_image_url')->toMediaCollection('floor_plans', 'floor_plans');
+                $property->save();
+            };
+
+            if ($request->hasFile('property_other_image_url')) {
+                $image = $property->getMedia('property_images');
+                $property->clearMediaCollection('propertyPictures');
+                $property->addMultipleMediaFromRequest(['property_other_image_url'])->each(function ($photo) {
+                    $photo->toMediaCollection('propertyPictures', 'property_images');
+                });
+                $property->save();
+            }
 
             return response()->json([
                 'data' => new PropertyResource($property)
             ], Response::HTTP_OK);
         } catch (\Throwable $th) {
             return response()->json([
-                'Message' => 'Property not Found'
+                'Message' => $th->getMessage()
             ], Response::HTTP_NOT_FOUND);
         }
     }
