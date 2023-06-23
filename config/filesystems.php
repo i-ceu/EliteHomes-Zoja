@@ -58,20 +58,20 @@ return [
 
         'avatars' => [
             'driver' => 'local',
-            'root'   => storage_path('avatars'),
-            'url'    => env('APP_URL') . '/media',
+            'root'   => public_path('/storage/avatars'),
+            'url'    => env('APP_URL') . '/storage/avatars',
         ],
 
         'floor_plans' => [
             'driver' => 'local',
-            'root'   => storage_path('floor_plans'),
-            'url'    => env('APP_URL') . '/media',
+            'root'   => public_path('/storage/floor_plans'),
+            'url'    => env('APP_URL') . '/storage/floor_plans',
         ],
 
         'property_images' => [
             'driver' => 'local',
-            'root'   => storage_path('property_images'),
-            'url'    => env('APP_URL') . '/media',
+            'root'   => public_path('/storage/property_images'),
+            'url'    => env('APP_URL') . '/storage/property_images',
         ],
 
     ],
