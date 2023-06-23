@@ -50,7 +50,6 @@ class PropertyController extends Controller
                 $photo->toMediaCollection('propertyPictures', 'property_images');
             });
         }
-        echo $property;
         return response()->json([
             'data' => new PropertyResource($property)
         ], Response::HTTP_CREATED);
@@ -92,6 +91,8 @@ class PropertyController extends Controller
     public function update(Request $request, int $property): JsonResponse
     {
         try {
+            echo $request;
+
             $property = Property::findOrFail($property);
             $property->update($request->all());
 
