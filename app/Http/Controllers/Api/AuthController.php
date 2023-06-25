@@ -24,7 +24,7 @@ class AuthController extends Controller
             $user->addMediaFromRequest('profile_picture')->toMediaCollection('avatars', 'avatars');
         }
 
-        // UserSignup::dispatch($user);
+        UserSignup::dispatch($user);
 
         return response()->json([
             'message' => 'User created successfully',
