@@ -46,7 +46,9 @@ class AuthController extends Controller
             'userId' => $user->id,
             'firstName' => $user->first_name,
             'lastName' => $user->last_name,
-            'profilePicture' =>  $user->getFirstMediaPath('avatars'),
+            'email' => $user->email,
+            'phone_number' => $user->phone_number,
+            'profilePicture' =>  $user->getFirstMediaUrl('avatars'),
         ];
 
         $user->full_name = $user->first_name . ' ' . $user->last_name; // @phpstan-ignore-line
