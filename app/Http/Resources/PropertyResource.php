@@ -41,7 +41,7 @@ class PropertyResource extends JsonResource
                 'full_name' => $this->user->first_name . ' ' . $this->user->last_name,
                 'phone_number' => $this->user->phone_number,
                 'email' => $this->user->email,
-                'profile_picture' => $this->user->profile_picture,
+                'profile_picture' => $this->user->getFirstMediaUrl('avatars'),
             ]
         ];
     }

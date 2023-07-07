@@ -11,7 +11,6 @@ use App\Http\Controllers\Api\{
     CategoryController,
     FavouriteController,
     ReviewsController
-
 };
 use App\Http\Middleware\{CheckOwnerShipMiddleware, CheckPropertyOwner, FavOwner, UserFav, ReviewsOwner};
 
@@ -99,17 +98,17 @@ Route::prefix('v1')->group(function () {
             });
         });
 
-        
-    //REVIEWS
 
-    Route::get('/properties/{property}/reviews', [ReviewsController::class, 'index']);
-Route::post('/properties/reviews', [ReviewsController::class, 'store']);
+        //REVIEWS
 
-Route::group(['middleware' => [ReviewsOwner::class]], function (){
-    
-    Route::put('/properties/reviews/{review}', [ReviewsController::class, 'update']);
-    Route::delete('/properties/reviews/{review}', [ReviewsController::class, 'destroy']);
-});
+        Route::get('/properties/{property}/reviews', [ReviewsController::class, 'index']);
+        Route::post('/properties/reviews', [ReviewsController::class, 'store']);
+
+        Route::group(['middleware' => [ReviewsOwner::class]], function () {
+
+            Route::put('/properties/reviews/{review}', [ReviewsController::class, 'update']);
+            Route::delete('/properties/reviews/{review}', [ReviewsController::class, 'destroy']);
+        });
 
 
         // ADMIN ROUTES

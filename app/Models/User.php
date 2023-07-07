@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Models\Property;
 use App\Models\Favourite;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -74,5 +75,16 @@ class User extends Authenticatable implements HasMedia
     public function favourite(): hasMany
     {
         return $this->hasMany(Favourite::class);
+    }
+
+    public function registerMediaCollection(): void
+    {
+        $this->addMediaCollection('profile_picture');
+    }
+    public function addProfilePicture()
+    {
+        return Attribute::make(
+            get: fn () => $this->addMedia('profile_picture') ?: null
+        );
     }
 }

@@ -18,7 +18,7 @@ class AuthController extends Controller
     public function register(SignupRequest $request): JsonResponse
     {
 
-        $user = User::create($request->validated());
+        $user = User::create($request->except('profile_picture'));
 
         if ($request->hasFile('profile_picture')) {
             $user->addMediaFromRequest('profile_picture')->toMediaCollection('avatars', 'avatars');
@@ -29,7 +29,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'User created successfully',
             'user' => new UserResource($user),
-        ], Response::HTTP_CREATED);
+        ], 201);
     }
 
     public function login(LoginRequest $request): JsonResponse

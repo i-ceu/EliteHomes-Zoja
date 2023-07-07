@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Favourite;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -50,5 +51,15 @@ class Property extends Model implements HasMedia
     public function reviews(): BelongsTo
     {
         return $this->belongsTo(Reviews::class);
+    }
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('floor_plans');
+    }
+    public function addPlanImages()
+    {
+        return Attribute::make(
+            get: fn () => $this->addMedia('property_plan_image_url') ?: null
+        );
     }
 }

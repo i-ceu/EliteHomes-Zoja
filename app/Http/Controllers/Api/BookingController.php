@@ -52,7 +52,7 @@ class BookingController extends Controller
             return response()->json([
                 'message' => "booking with this id not found ",
                 'status' => 404
-            ], Response::HTTP_NOT_FOUND);
+            ], 404);
         }
     }
     public function showAllPropertyEnquiries(int $property): JsonResponse

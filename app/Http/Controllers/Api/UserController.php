@@ -53,10 +53,9 @@ class UserController extends Controller
             //code...
             $user = User::findOrFail($user);
 
-            $user->update($request->all());
+            $user->update($request->except('profile_picture'));
 
             if ($request->hasFile('profile_picture')) {
-                $image = $user->getFirstMedia('profile_picture');
                 $user->clearMediaCollection('profile_picture');
                 $user->addMediaFromRequest('profile_picture')->toMediaCollection('avatars', 'avatars');
                 $user->save();
