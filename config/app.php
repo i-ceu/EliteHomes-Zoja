@@ -155,9 +155,14 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
+    
 
     'providers' => ServiceProvider::defaultProviders()->merge([
+        
+        
         /*
+
+
          * Package Service Providers...
          */
 
