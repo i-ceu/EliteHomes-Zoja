@@ -58,6 +58,8 @@ return [
 
     'url' => env('APP_URL', 'https://elite-homes.vercel.app'),
 
+    'live' => env('LIVE_URL', 'https://elite-homes.vercel.app'),
+
     'asset_url' => env('ASSET_URL'),
 
     /*
