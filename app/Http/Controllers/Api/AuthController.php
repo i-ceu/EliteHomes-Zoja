@@ -51,7 +51,7 @@ class AuthController extends Controller
             'userId' => $user->id,
             'firstName' => $user->first_name,
             'lastName' => $user->last_name,
-            // 'profilePicture' =>  $user->getFirstMediaUrl('avatars'),
+          
         ];
 
         $user->full_name = $user->first_name . ' ' . $user->last_name; // @phpstan-ignore-line
@@ -79,8 +79,7 @@ class AuthController extends Controller
           $code = ResestCodePassword::create($data);
         
           // Send email to user
-        //    $user->notify(new EmailVerificationNotification($data['Token']));
-      
+    
           Mail::to($request->email)->send(new SendCodeResetPassword($data['Token']));
           return response(['message'=> trans('passwords.sent')],200);    
     }   
@@ -115,7 +114,7 @@ class AuthController extends Controller
      
      public function logout(Request $request){
         Auth::logout();
-    //    $request->user()->currentAccessToken()->delete(); 
+
          return response()->json([
      'message'=> 'You have successfully logged out',
              ],200);
