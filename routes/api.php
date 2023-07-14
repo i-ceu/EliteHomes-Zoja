@@ -12,6 +12,18 @@ use App\Http\Controllers\Api\{
     FavouriteController,
     ReviewsController
 };
+// use App\Http\Controllers\Api\AuthController;
+// use App\Http\Controllers\Api\BookingController;
+// use App\Http\Controllers\Api\UserController;
+// use App\Http\Controllers\Api\PropertyController;
+// use App\Http\Controllers\Api\CategoryController;
+// use App\Http\Controllers\Api\FavouriteController;
+// use App\Http\Controllers\Api\ReviewsController;
+
+
+
+
+
 use App\Http\Middleware\{CheckOwnerShipMiddleware, CheckPropertyOwner, FavOwner, UserFav, ReviewsOwner};
 
 /*
@@ -36,11 +48,13 @@ Route::prefix('v1')->group(function () {
 
     // Declare register route
     Route::post('/register', [AuthController::class, 'register'])->name('register');
-
     // Declare login route
     Route::post('/login', [AuthController::class, 'login'])->name('login');
 
     //All Unprotected routes should be declared here.
+    Route::post('forgetpassword', [AuthController::class, 'forgetPassword'])->name('forgetPassword');
+    Route::post('passwordReset', [AuthController::class, 'passwordReset']);
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/users/{id}', [UserController::class, 'show'])->name('no-auth-user-show');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
@@ -100,15 +114,13 @@ Route::prefix('v1')->group(function () {
 
 
         //REVIEWS
-
+Route::group(['middleware' => [ReviewsOwner::class]], function (){
+    
+    Route::put('/properties/reviews/{review}', [ReviewsController::class, 'update']);
+    Route::delete('/properties/reviews/{review}', [ReviewsController::class, 'destroy']);
+});
         Route::get('/properties/{property}/reviews', [ReviewsController::class, 'index']);
         Route::post('/properties/reviews', [ReviewsController::class, 'store']);
-
-        Route::group(['middleware' => [ReviewsOwner::class]], function () {
-
-            Route::put('/properties/reviews/{review}', [ReviewsController::class, 'update']);
-            Route::delete('/properties/reviews/{review}', [ReviewsController::class, 'destroy']);
-        });
 
 
         // ADMIN ROUTES
