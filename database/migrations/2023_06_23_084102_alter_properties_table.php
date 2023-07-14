@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-        Schema::create('search', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('properties', function (Blueprint $table) {
+            $table->string('property_plan_image_url')->nullable()->change();
         });
     }
 
@@ -23,7 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('search');
-
+        Schema::table('properties', function (Blueprint $table) {
+            $table->string('property_plan_image_url')->change();
+        });
     }
 };

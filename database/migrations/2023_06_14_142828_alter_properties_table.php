@@ -15,7 +15,7 @@ return new class extends Migration
             $table->dropColumn('property_other_image_url');
         });
         Schema::table('properties', function (Blueprint $table) {
-            $table->json('property_other_image_url');
+            $table->json('property_other_image_url')->nullable();
         });
     }
 

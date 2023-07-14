@@ -6,6 +6,7 @@ use App\Events\UserSignup;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\{forgetPasswordReques, SignupRequest, LoginRequest, passwordResetRequest};
 use App\Mail\SendCodeResetPassword;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\users;
@@ -27,14 +28,20 @@ class AuthController extends Controller
     use ResponseTrait;
     public function register(SignupRequest $request): JsonResponse
     {
-        $user =User::create($request->validated());
+
+
+        $user = User::create($request->except('profile_picture'));
+
+        if ($request->hasFile('profile_picture')) {
+            $user->addMediaFromRequest('profile_picture')->toMediaCollection('avatars', 'avatars');
+        }
 
         UserSignup::dispatch($user);
 
         return response()->json([
             'message' => 'User created successfully',
-            'user' => $user,
-        ], Response::HTTP_CREATED);
+            'user' => new UserResource($user),
+        ], 201);
     }
 
     public function login(LoginRequest $request): JsonResponse
@@ -51,7 +58,9 @@ class AuthController extends Controller
             'userId' => $user->id,
             'firstName' => $user->first_name,
             'lastName' => $user->last_name,
-          
+            'email' => $user->email,
+            'phone_number' => $user->phone_number,
+            'profilePicture' =>  $user->getFirstMediaUrl('avatars'),
         ];
 
         $user->full_name = $user->first_name . ' ' . $user->last_name; // @phpstan-ignore-line

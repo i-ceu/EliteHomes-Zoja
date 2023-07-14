@@ -139,7 +139,7 @@
                                                                             Hi there {{$user->username}},
                                                                             <p> Someone made an enquiry about your property {{$property->property_name}}
                                                                             </p>
-                                                                            Login to view request <a href="{{config('app.url')}}/properties">here</a>
+                                                                            Login to view request <a href="{{config('app.live')}}/offers">here</a>
                                                                         </small>
 
                                                                 </div>

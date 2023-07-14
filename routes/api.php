@@ -11,8 +11,6 @@ use App\Http\Controllers\Api\{
     CategoryController,
     FavouriteController,
     ReviewsController
-   
-
 };
 // use App\Http\Controllers\Api\AuthController;
 // use App\Http\Controllers\Api\BookingController;
@@ -54,12 +52,13 @@ Route::prefix('v1')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
 
     //All Unprotected routes should be declared here.
-    Route::post('/users/{id}', [UserController::class, 'show'])->name('no-auth-user-show');
     Route::post('forgetpassword', [AuthController::class, 'forgetPassword'])->name('forgetPassword');
     Route::post('passwordReset', [AuthController::class, 'passwordReset']);
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-
-
+    Route::get('/users/{id}', [UserController::class, 'show'])->name('no-auth-user-show');
+    Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
+    Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
+    Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
 
 
 
@@ -69,7 +68,6 @@ Route::prefix('v1')->group(function () {
 
         //PROPERTY ROUTES
         Route::prefix('properties')->group(function () {
-            Route::get('/', [PropertyController::class, 'index'])->name('properties.index');
             Route::group(['middleware' => [CheckPropertyOwner::class]], static function () {
                 Route::put('/{property}', [PropertyController::class, 'update'])->name('properties.update');
                 //route for user to delete a product
@@ -83,7 +81,8 @@ Route::prefix('v1')->group(function () {
 
 
         //BOOKING ROUTES
-        Route::apiResource('/booking', BookingController::class);
+        Route::post('/booking', [BookingController::class, 'store'])->name('create-booking');
+        Route::get('/booking/{booking}', [BookingController::class, 'show'])->name('show-booking');
 
         //CATEGORY ROUTES
         Route::prefix('categories')->group(function () {
@@ -113,18 +112,15 @@ Route::prefix('v1')->group(function () {
             });
         });
 
-        
-    //REVIEWS
 
-    Route::get('/properties/{property}/reviews', [ReviewsController::class, 'index']);
-Route::post('/properties/reviews', [ReviewsController::class, 'store']);
-
-
+        //REVIEWS
 Route::group(['middleware' => [ReviewsOwner::class]], function (){
     
     Route::put('/properties/reviews/{review}', [ReviewsController::class, 'update']);
     Route::delete('/properties/reviews/{review}', [ReviewsController::class, 'destroy']);
 });
+        Route::get('/properties/{property}/reviews', [ReviewsController::class, 'index']);
+        Route::post('/properties/reviews', [ReviewsController::class, 'store']);
 
 
         // ADMIN ROUTES
