@@ -16,8 +16,10 @@ echo "Caching routes..."
 php artisan route:cache
 
 echo "Running migrations..."
-php artisan migrate:rollback
 php artisan migrate --force
 
 echo "Passport install..."
 php artisan passport:install
+
+echo "Storage link"
+php artisan storage:link
