@@ -28,7 +28,7 @@ class BookingResource extends JsonResource
             'property_address' => $this->property?->property_address,
             'property_category' => $this->property?->category?->id,
             'property_description' => $this->property?->property_description,
-            'property_other_image_url' => $this->getMedia('propertyPictures')->map(function (Media $media) {
+            'property_other_image_url' => $this->property->getMedia('propertyPictures')->map(function (Media $media) {
                 return $media->getUrl();
             })->toArray(),
             'propertyOwner' => $this->property?->user?->username,
