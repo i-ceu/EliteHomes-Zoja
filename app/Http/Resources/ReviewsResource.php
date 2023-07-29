@@ -19,10 +19,12 @@ class ReviewsResource extends JsonResource
             'id' => strval($this->id),
             'type' => 'review',
             'attributes' => [
+                'username' => $this->username,
                 'comment' => $this->comment,
                 'rating' => $this->rating,
                 'user_id' => $this->user_id,
-                'property_id' => $this->property_id
+                'property_id' => $this->property_id,
+                'profile_picture' => $this->profile_picture
             ]
             ];
         }
