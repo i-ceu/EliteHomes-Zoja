@@ -42,9 +42,10 @@ class PropertyRequest extends FormRequest
             'property_total_floor_area' => 'required',
             'property_bedroom_number' => 'required',
             'property_toilet_number' => 'required',
-            'property_plan_image_url' => 'required',
-            'property_other_image_url' => 'required',
+            'property_plan_image_url' => 'nullable|mimes:png,jpg,svg,jpeg,webp',
+            'property_other_image_url.*' => 'nullable|mimes:png,jpg,svg,jpeg,webp',
             'user_id' => ['required']
+            // "img"=>'required|mimes:png,jpg,svg,jpeg,webp'
         ];
     }
 }

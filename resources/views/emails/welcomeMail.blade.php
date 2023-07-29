@@ -140,7 +140,7 @@
                                                                             <p> Welcome to Elite Homes. Buy and sell properties
                                                                                 at the best prices</p>
 
-                                                                            Check out our properties <a href="{{config('app.url')}}">here</a>
+                                                                            Check out our properties <a href="{{config('app.live')}}">here</a>
                                                                         </small>
 
                                                                 </div>

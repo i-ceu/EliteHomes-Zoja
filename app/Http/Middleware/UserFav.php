@@ -18,15 +18,15 @@ class UserFav
      */
     public function handle(Request $request, Closure $next): Response
     {
-        
-        $user = $request->user();
-        $favourites = Favourite::where('user_id', '=', $user->id)->get();
 
-        if ($favourites == null ) {
-        return response()->json([
-        'message' => 'You are not authorized to perform this action'
-    ], Response::HTTP_UNAUTHORIZED);
-} 
+        $user = $request->user();
+        $favourites = Favourite::where('user_id', '=', $user?->id)->get();
+
+        if ($favourites == null) {
+            return response()->json([
+                'message' => 'You are not authorized to perform this action'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
         return $next($request);
     }
 }

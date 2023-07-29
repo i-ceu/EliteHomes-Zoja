@@ -18,14 +18,18 @@ class BookingResource extends JsonResource
     {
         return [
             "id" => strval($this->id),
-            'type' => 'booking',
-            'attributes' => [
-                'name' => $this->name,
-                'message' => $this->message,
-                'email' => $this->email,
-                'property' => $this->property?->property_name,
-                'sender' => $this->sender?->username
-            ],
+            'name' => $this->name,
+            'message' => $this->message,
+            'email' => $this->email,
+            'property_id' => $this->property?->id,
+            'property_name' => $this->property?->property_name,
+            'property_address' => $this->property?->property_address,
+            'property_category' => $this->property?->category->id,
+            'property_description' => $this->property?->property_description,
+            'property_other_image_url' => json_decode($this->property?->property_other_image_url),
+            'propertyOwner' => $this->property?->user?->username,
+            'sender' => $this->sender?->username
+
 
         ];
     }

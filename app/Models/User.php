@@ -6,14 +6,19 @@ namespace App\Models;
 use App\Models\Property;
 use App\Models\Favourite;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuids;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids, InteractsWithMedia;
 
     public $incrementing = false;
 
@@ -22,6 +27,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    public function getMediaDirectory(): string
+    {
+        // You can customize the folder structure here
+        return 'avatars/' . $this->id;
+    }
     protected $fillable = [
         'username',
         'email',
@@ -57,13 +68,23 @@ class User extends Authenticatable
     ];
 
 
-    public function property(): hasMany
+    public function property(): HasMany
     {
-         return $this->hasMany(Property::class);
+        return $this->hasMany(Property::class, 'user_id');
     }
-    public function favourite() : hasMany
+    public function favourite(): hasMany
     {
-         return $this->hasMany(Favourite::class);
+        return $this->hasMany(Favourite::class);
     }
 
+    public function registerMediaCollection(): void
+    {
+        $this->addMediaCollection('profile_picture');
+    }
+    public function addProfilePicture()
+    {
+        return Attribute::make(
+            get: fn () => $this->addMedia('profile_picture') ?: null
+        );
+    }
 }
