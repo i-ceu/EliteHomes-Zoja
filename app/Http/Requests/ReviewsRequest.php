@@ -30,7 +30,8 @@ class ReviewsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'required|string|max:225',
+            'first_name' => 'required|string|max:225',
+            'last_name' => 'required|string|max:225',
             'user_id' => 'required|exists:users,id' ,
             'property_id' => 'required|exists:properties,id' ,
             'profile_picture' => 'nullable|mimes:png,jpg,svg,jpeg,webp',

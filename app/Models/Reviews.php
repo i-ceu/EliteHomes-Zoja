@@ -15,7 +15,8 @@ class Reviews extends Model
         use HasFactory;
 
     protected $fillable = [
-        'username',
+        'first_name',
+        'last_name' ,
         'property_id' ,
         'user_id' ,
         'profile_picture',
