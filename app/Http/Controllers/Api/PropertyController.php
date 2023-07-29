@@ -7,6 +7,7 @@ use App\Http\Resources\PropertyCollection;
 use App\Http\Resources\PropertyResource;
 use App\Http\Controllers\Controller;
 use App\Models\Property;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +28,24 @@ class PropertyController extends Controller
         return response()->json([
             'data' => new PropertyResource($property)
         ], Response::HTTP_CREATED);
+    }
+    public function userindex( Request $request, User $user):JsonResponse
+    {
+        try {
+            $userId = $request->user();
+            // echo $userId->id;
+            $property = Property::where('user_id', $userId->id)->get();
+            // echo($property);
+            return response()->json([
+                'Message'=> 'User Property Found',
+                'data'=> $property], Response::HTTP_OK);
+        } 
+        catch (\Throwable $th) {
+            return response()->json([
+                'Message' => 'This User has no Property',
+            ], Response::HTTP_NOT_FOUND);
+        }
+        
     }
 
     public function show(int $property): JsonResponse
@@ -60,6 +79,27 @@ class PropertyController extends Controller
                 'Message' => 'Property not Found'
             ], Response::HTTP_NOT_FOUND);
         }
+    }
+    public function getOwnerDetails(Property $property)
+    {
+        try{
+            //"full_name" = $user->first_name '.' $user->last_name;
+            $owner = $property->user;
+            return response()->json([
+                'message' => 'User details found',
+                'first name'=> $owner->first_name,
+                'last name'=> $owner->last_name,
+                'phone number'=>$owner->phone_number,
+                'email'=>$owner->email,
+
+            ], Response::HTTP_OK);
+
+        }catch(\Throwable $th){
+            return response()->json([
+                'Message' => 'User details not Found'
+            ], Response::HTTP_NOT_FOUND);
+        }
+        
     }
 
     public function destroy(int $property): JsonResponse

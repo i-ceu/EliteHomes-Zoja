@@ -41,8 +41,8 @@ class FavouriteController extends Controller
        $favourite = Favourite::firstOrCreate($request->validated());
         return response()->json([
             'message' => 'Products added to favorites.',
-            'data' => $favourite,
-            'status' => 200
+            'data' => new FavouriteResource($favourite),
+            'status' => 201
         ]);
         
     }
