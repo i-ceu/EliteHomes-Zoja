@@ -19,7 +19,7 @@ git clone <repository-url>
 2. Navigate to the project directory.
 
 ```
-composer install
+composer instal
 ```
 
 3. Configure Environment:

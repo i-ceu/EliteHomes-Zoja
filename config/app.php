@@ -31,6 +31,7 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    'base_url' => env('BASE_URL'),
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -55,7 +56,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://elite-homes.vercel.app'),
+
+    'live' => env('LIVE_URL', 'https://elite-homes.vercel.app'),
 
     'asset_url' => env('ASSET_URL'),
 
@@ -154,9 +157,14 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
+    
 
     'providers' => ServiceProvider::defaultProviders()->merge([
+        
+        
         /*
+
+
          * Package Service Providers...
          */
 
