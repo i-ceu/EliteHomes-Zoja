@@ -23,8 +23,8 @@ class Favourite extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function property(): HasMany
+    public function property(): belongsToMany
     {
-        return $this->hasMany(Property::class);
+        return $this->belongsToMany(Property::class);
     }
 }

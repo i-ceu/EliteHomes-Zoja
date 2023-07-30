@@ -44,10 +44,17 @@ class Property extends Model implements HasMedia
     {
         return $this->hasMany(Booking::class);
     }
-    public function favourites(): BelongsTo
+    // public function favourites(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Favourite::class, );
+    // }
+
+    public function favouritedBy()
     {
-        return $this->belongsTo(Favourite::class);
+        return $this->belongsToMany(User::class, 'favourites', 'property_id', 'user_id')
+            ->withTimestamps();
     }
+
     public function reviews(): BelongsTo
     {
         return $this->belongsTo(Reviews::class);

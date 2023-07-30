@@ -72,10 +72,15 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasMany(Property::class, 'user_id');
     }
-    public function favourite(): hasMany
+   
+    
+    public function favourites()
     {
-        return $this->hasMany(Favourite::class);
+        return $this->belongsToMany(Property::class, 'favourites', 'user_id', 'property_id')
+            ->select('property_other_image_url', 'category_id', 'property_address', 'property_name', 'property_description', 'id')
+            ->withTimestamps();
     }
+    
 
     public function registerMediaCollection(): void
     {

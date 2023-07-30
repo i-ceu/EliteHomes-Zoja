@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Favourite;
+use App\Models\User;
+use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -13,76 +14,69 @@ use App\Http\Resources\FavouriteResource;
 class FavouriteController extends Controller
 {
 
-    public function index(Request $request): JsonResponse
+    public function index(Request $request, string $userId)//: JsonResponse
     {
 
-        try {
+        $auth = auth()->id();
+        $user = User::find($auth);
+        $favourites = $user->favourites;
 
-            $user = $request->user();
-            $favourites = Favourite::where('user_id', '=', $user?->id)->paginate(5);
-
-            return response()->json([
-                'message' => 'Favourite listed successfully',
-                'data' => $favourites,
-                'status' => 200
-            ]);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => 'You have no favourites',
-                'status' => 200
-            ]);
-        }
+        return response()->json([
+            'favouriteProperties' => $favourites
+        ], HTTP_OK);
     }
 
 
-    public function store(FavouriteRequest $request): JsonResponse
-    {
-         
-       $favourite = Favourite::firstOrCreate($request->validated());
-        return response()->json([
-            'message' => 'Products added to favorites.',
-            'data' => new FavouriteResource($favourite),
-            'status' => 201
-        ]);
+    public function store(Request $request): JsonResponse
+    {    
         
         try {
 
-            $user = $request->user();
-            $userInput = $request->user()?->id;
-            $favourite = Favourite::create($request->validated());
+            $propertyInput = $request->input('property_id');
+            $auth = auth()->id();
+            
+            $user = User::find($auth);
+            $property = Property::find($propertyInput);
+            
+            $isFavourited = $user->favourites->contains($property->id);
 
+            if($isFavourited) {
+                return response()->json([
+                    'message' => 'property already exists in your favourite'
+                ], 403);
+            }
+                $user->favourites()->attach($property->id);
+                return response()->json([
+                    'message' => 'Property added to favourites'
+                ], HTTP_OK);
+            
+
+        } catch(\Throwable $th) {
+            // dd($isFavourited);
             return response()->json([
-                'message' => 'Products added to favorites.',
-                'data' => $favourite,
-                'status' => 200
-            ]);
-        } catch (\Throwable $e) {
-            return response()->json([
-                'message' => 'PRoduct already exists in favourite',
-                'status' => 403
-            ]);
+                'message' => 'property already exists in your favourite'
+            ], 403);
         }
+            
     }
-
-    public function delete(int $id): JsonResponse
+        
+    public function delete(Request $request, int $PropertyId): JsonResponse
     {
+       
+        
+        $user = auth()->user();
+        $property = Property::findOrFail($PropertyId);
+
         try {
-            //code...
+            $detached = $user->favourites()->detach($property->id);
 
-            $favourite = Favourite::findOrFail($id);
-            $favourite->delete();
-
-
-            return response()->json([
-                'message' => "favourite deleted successfully",
-                'data' => $favourite,
-                'status' => 200
-            ]);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => "favourite was not found ",
-                'status' => 404
-            ]);
+            if ($detached) {
+                return response()->json(['message' => 'Property removed from favorites.'], 200);
+            } else {
+                return response()->json(['error' => 'Failed to remove property from favorites.'], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while removing the property from favorites.'], 500);
         }
     }
 }
