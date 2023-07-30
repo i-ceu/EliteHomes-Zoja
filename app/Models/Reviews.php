@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Reviews extends Model
+class Reviews extends Model implements HasMedia
 
 
     {
-        use HasFactory;
+        use HasFactory, InteractsWithMedia;
 
     protected $fillable = [
         'property_id' ,
@@ -20,7 +22,7 @@ class Reviews extends Model
         'rating' ,
         'comment' 
     ];
-    public function user(): belongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
