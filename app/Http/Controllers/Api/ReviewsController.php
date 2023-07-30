@@ -48,7 +48,7 @@ class ReviewsController extends Controller
     }
 
     // Update a review
-    public function update(Request $request,Reviews $review)
+    public function update(Request $request,int $review)
     {
         try {
             //code...
