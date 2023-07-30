@@ -9,7 +9,7 @@ use App\Mail\SendCodeResetPassword;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\users;
+// use App\Models\users;
 use App\Http\Traits\ResponseTrait;
 use App\Models\EmailVerification;
 use Illuminate\Support\Facades\DB;
