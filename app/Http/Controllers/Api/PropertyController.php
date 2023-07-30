@@ -10,6 +10,8 @@ use App\Models\Property;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +20,7 @@ class PropertyController extends Controller
 {
     //
 
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         return PropertyResource::collection(Property::orderByDesc('id')->get());
     }
@@ -33,9 +35,7 @@ class PropertyController extends Controller
         }
 
         if ($request->hasFile('property_other_image_url')) {
-            $property->addMultipleMediaFromRequest(['property_other_image_url'])->each(function ($photo) {
-                $photo->toMediaCollection('propertyPictures', 'property_images');
-            });
+            $property->addMultipleMediaFromRequest(['property_other_image_url'])->each->toMediaCollection('propertyPictures', 'property_images');
         }
         return response()->json([
             'data' => new PropertyResource($property)
@@ -66,7 +66,7 @@ class PropertyController extends Controller
         try {
             $user = $request->user();
             // echo $user->id;
-            $property = Property::where('user_id', $user->id)->get();
+            $property = Property::where('user_id', $user?->id)->get();
             // echo ($property);
             return response()->json([
                 'Message' => 'User Properties Found',
@@ -111,9 +111,7 @@ class PropertyController extends Controller
             if ($request->hasFile('property_other_image_url')) {
                 $image = $property->getMedia('property_images');
                 $property->clearMediaCollection('propertyPictures');
-                $property->addMultipleMediaFromRequest(['property_other_image_url'])->each(function ($photo) {
-                    $photo->toMediaCollection('propertyPictures', 'property_images');
-                });
+                $property->addMultipleMediaFromRequest(['property_other_image_url'])->each->toMediaCollection('propertyPictures', 'property_images');
                 $property->save();
             }
 
@@ -126,17 +124,17 @@ class PropertyController extends Controller
             ], Response::HTTP_NOT_FOUND);
         }
     }
-    public function getOwnerDetails(Property $property)
+    public function getOwnerDetails(Property $property): JsonResponse
     {
         try {
             //"full_name" = $user->first_name '.' $user->last_name;
             $owner = $property->user;
             return response()->json([
                 'message' => 'User details found',
-                'first name' => $owner->first_name,
-                'last name' => $owner->last_name,
-                'phone number' => $owner->phone_number,
-                'email' => $owner->email,
+                'first name' => $owner?->first_name,
+                'last name' => $owner?->last_name,
+                'phone number' => $owner?->phone_number,
+                'email' => $owner?->email,
 
             ], Response::HTTP_OK);
         } catch (\Throwable $th) {

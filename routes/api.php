@@ -53,6 +53,8 @@ Route::prefix('v1')->group(function () {
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
     Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
+    Route::get('/properties/{property}/reviews', [ReviewsController::class, 'index'])->name('get-all-reviews');
+
 
 
 
@@ -115,7 +117,6 @@ Route::group(['middleware' => [ReviewsOwner::class]], function (){
     Route::put('/properties/reviews/{review}', [ReviewsController::class, 'update']);
     Route::delete('/properties/reviews/{review}', [ReviewsController::class, 'destroy']);
 });
-        Route::get('/properties/{property}/reviews', [ReviewsController::class, 'index']);
         Route::post('/properties/reviews', [ReviewsController::class, 'store']);
 
 

@@ -18,7 +18,7 @@ class ReviewsController extends Controller
     /**
      * Display a listing of the reviews.
      */
-    public function index(int $property)
+    public function index(int $property): JsonResponse
     {
         try {
             $allReviews = Reviews::where('property_id', $property)->get();
@@ -35,32 +35,31 @@ class ReviewsController extends Controller
         }
     }
 
-    public function store(ReviewsRequest $request)
+    public function store(ReviewsRequest $request): JsonResponse
     {
 
         // Create a new review
-        $review = Reviews::create($request->validated());
+        $review = Reviews::create(array_merge($request->validated(), ['user_id' => auth()->user()->id]));
 
-        return response()->json([                           
-             'message' => 'Review added successfully' ,
-             'data' =>$review
-            ], 201); 
+        return response()->json([
+            'message' => 'Review added successfully',
+            'data' => new ReviewsResource($review) 
+        ], 201);
     }
 
     // Update a review
-    public function update(Request $request,int $review)
+    public function update(Request $request, int $review): JsonResponse
     {
         try {
             //code...
-        $review = Reviews::findOrFail($review);
+            $review = Reviews::findOrFail($review);
 
-        $review->update($request->all());
+            $review->update($request->all());
 
-        return response()->json([
-            'message' => 'Review updated successfully' ,
-            'data' =>$review
-        ], 200);
-
+            return response()->json([
+                'message' => 'Review updated successfully',
+                'data' => new ReviewsResource($review) 
+            ], 200);
         } catch (\Throwable $th) {
 
             return response()->json([
@@ -71,7 +70,7 @@ class ReviewsController extends Controller
     }
 
     // Delete a review
-    public function destroy($reviewId)
+    public function destroy(int $reviewId): JsonResponse
     {
         // Find the review
         $review = Reviews::findOrFail($reviewId);
