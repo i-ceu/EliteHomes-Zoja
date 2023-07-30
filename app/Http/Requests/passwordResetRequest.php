@@ -1,33 +1,27 @@
 <?php
 
 namespace App\Http\Requests;
-use Illuminate\Http\Request;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class ReviewsRequest extends FormRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class passwordResetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     * 
-     * 
      */
-    public function authorize():bool
+    public function authorize(): bool
     {
         return true;
-
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'property_id' => 'required|exists:properties,id' ,
-            'rating' => 'required|integer|min:1|max:5' ,
-            'comment' => 'required|string|max:225' ,
         ];
     }
 }

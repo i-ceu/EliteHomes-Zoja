@@ -39,11 +39,11 @@ class ReviewsController extends Controller
     {
 
         // Create a new review
-        $review = Reviews::create($request->validated());
+        $review = Reviews::create(array_merge($request->validated(), ['user_id' => auth()->user()->id]));
 
         return response()->json([
             'message' => 'Review added successfully',
-            'data' => $review
+            'data' => new ReviewsResource($review) 
         ], 201);
     }
 
@@ -58,7 +58,7 @@ class ReviewsController extends Controller
 
             return response()->json([
                 'message' => 'Review updated successfully',
-                'data' => $review
+                'data' => new ReviewsResource($review) 
             ], 200);
         } catch (\Throwable $th) {
 
