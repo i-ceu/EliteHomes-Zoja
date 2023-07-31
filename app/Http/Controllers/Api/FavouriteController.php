@@ -23,7 +23,7 @@ class FavouriteController extends Controller
 
         return response()->json([
             'favouriteProperties' => $favourites
-        ], HTTP_OK);
+        ], 200);
     }
 
 
@@ -48,7 +48,7 @@ class FavouriteController extends Controller
                 $user->favourites()->attach($property->id);
                 return response()->json([
                     'message' => 'Property added to favourites'
-                ], HTTP_OK);
+                ], 200);
             
 
         } catch(\Throwable $th) {
