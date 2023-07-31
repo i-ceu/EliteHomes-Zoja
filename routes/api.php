@@ -12,13 +12,7 @@ use App\Http\Controllers\Api\{
     FavouriteController,
     ReviewsController
 };
-// use App\Http\Controllers\Api\AuthController;
-// use App\Http\Controllers\Api\BookingController;
-// use App\Http\Controllers\Api\UserController;
-// use App\Http\Controllers\Api\PropertyController;
-// use App\Http\Controllers\Api\CategoryController;
-// use App\Http\Controllers\Api\FavouriteController;
-// use App\Http\Controllers\Api\ReviewsController;
+
 
 
 
@@ -77,7 +71,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('/{property}/bookings', [BookingController::class, 'showAllPropertyEnquiries'])->name('show-all-property-enquiries');
             });
 
-            Route::get('properties/{property}/user/', [PropertyController::class, 'getOwnerDetails'])->name('properties.getOwnerDetails');
+            Route::get('/{property}/user/', [PropertyController::class, 'getOwnerDetails'])->name('properties.getOwnerDetails');
         });
 
 
@@ -90,13 +84,15 @@ Route::prefix('v1')->group(function () {
         Route::prefix('categories')->group(function () {
             Route::get('/', [CategoryController::class, 'index'])->name('no-admin-index');
             Route::get('/{category}', [CategoryController::class, 'show'])->name('no-admin-show');
-
-            Route::group(['middleware' => [UserFav::class]], static function () {
-                Route::get('/user/favourites', [FavouriteController::class, 'index'])->name('favourite.index');
-            });
         });
 
+        //FAVOURITE ROUTES
 
+        Route::prefix('favourites')->group(function () {
+            Route::get('/{userId}/properties', [FavouriteController::class, 'index'])->name('favourite.index');
+            Route::post('/user', [FavouriteController::class, 'store'])->name('favourite.store');
+            Route::delete('/user/{propertyId}', [FavouriteController::class, 'delete'])->name('favourite.delete');
+        });
 
 
         //PROPERTY ROUTES
