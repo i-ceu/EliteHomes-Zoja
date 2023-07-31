@@ -42,42 +42,26 @@ class PropertyController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    // public function userindex( Request $request, User $user):JsonResponse
-    // {
-    //     try {
-    //         $userId = $request->user();
-    //         // echo $userId->id;
-    //         $property = Property::where('user_id', $userId->id)->get();
-    //         // echo($property);
-    //         return response()->json([
-    //             'Message'=> 'User Property Found',
-    //             'data'=> $property], Response::HTTP_OK);
-    //     } 
-    //     catch (\Throwable $th) {
-    //         return response()->json([
-    //             'Message' => 'This User has no Property',
-    //         ], Response::HTTP_NOT_FOUND);
-    //     }
-        
-    // }
-
-    public function userindex(Request $request, string $id): JsonResponse
+    public function userindex( Request $request, User $user):JsonResponse
     {
         try {
-            $user = $request->user();
-            // echo $user->id;
-            $property = Property::where('user_id', $user?->id)->get();
-            // echo ($property);
+            $userId = $request->user();
+            // echo $userId->id;
+            $property = Property::where('user_id', $userId->id)->get();
+            // echo($property);
             return response()->json([
-                'Message' => 'User Properties Found',
-                'data' =>  PropertyResource::collection($property)
-            ], Response::HTTP_OK);
-        } catch (\Throwable $th) {
+                'Message'=> 'User Property Found',
+                'data'=> $property], Response::HTTP_OK);
+        } 
+        catch (\Throwable $th) {
             return response()->json([
                 'Message' => 'This User has no Property',
             ], Response::HTTP_NOT_FOUND);
         }
+        
     }
+
+    
     public function show(int $property): JsonResponse
     {
         try {

@@ -14,7 +14,7 @@ use App\Http\Resources\FavouriteResource;
 class FavouriteController extends Controller
 {
 
-    public function index(Request $request, string $userId)//: JsonResponse
+    public function index(Request $request, string $userId): JsonResponse
     {
 
         $auth = auth()->id();
@@ -22,7 +22,7 @@ class FavouriteController extends Controller
         $favourites = $user->favourites;
 
         return response()->json([
-            'favouriteProperties' => $favourites
+            'favouriteProperties' => FavouriteResource::collection($favourites)
         ], 200);
     }
 

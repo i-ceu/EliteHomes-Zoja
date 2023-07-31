@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 /** @mixin \App\Models\Favourite */
 
 class FavouriteResource extends JsonResource
@@ -16,16 +17,14 @@ class FavouriteResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => strval($this->id),
-            'type' => 'favourite_product',
-            'relationships' => [
-                'user' => [
-                    'id' => strval($this->user_id)
-                ],
-                'property' => [
-                    'id' => strval($this->property_id)
-                ]
-            ]
-        ]; 
+            "id" => strval($this->id),
+            'property_name' => $this->property_name,
+            'property_address' => $this->property_address,
+            'category_id' => $this->category_id,
+            'property_description' => $this->property_description,
+            'property_other_image_url' => $this->getMedia('propertyPictures')->map(function (Media $media) {
+                return $media->getUrl();
+            })->toArray(),
+        ];
     }
 }
