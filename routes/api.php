@@ -90,8 +90,8 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('favourites')->group(function () {
             Route::get('/{userId}/properties', [FavouriteController::class, 'index'])->name('favourite.index');
-            Route::post('/user', [FavouriteController::class, 'store'])->name('favourite.store');
-            Route::delete('/user/{propertyId}', [FavouriteController::class, 'delete'])->name('favourite.delete');
+            Route::post('/{propertyId}', [FavouriteController::class, 'store'])->name('favourite.store');
+            Route::delete('/{propertyId}', [FavouriteController::class, 'delete'])->name('favourite.delete');
         });
 
 
