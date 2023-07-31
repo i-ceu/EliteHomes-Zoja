@@ -51,7 +51,7 @@ class PropertyController extends Controller
             // echo($property);
             return response()->json([
                 'Message'=> 'User Property Found',
-                'data'=> $property], Response::HTTP_OK);
+                'data'=> PropertyResource::collection($property)], Response::HTTP_OK);
         } 
         catch (\Throwable $th) {
             return response()->json([
