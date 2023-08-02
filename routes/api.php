@@ -92,6 +92,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/{userId}/properties', [FavouriteController::class, 'index'])->name('favourite.index');
             Route::post('/{propertyId}', [FavouriteController::class, 'store'])->name('favourite.store');
             Route::delete('/{propertyId}', [FavouriteController::class, 'delete'])->name('favourite.delete');
+            Route::get('/{userId}/{propertyId}/check', [FavouriteController::class, 'checkFavourite'])->name('favourite.checkFavourite');
         });
 
 
