@@ -22,6 +22,7 @@ class FavouriteController extends Controller
         $favourites = $user->favourites;
 
         return response()->json([
+            'message' => 'Favourite properties showed successfully',
             'favouriteProperties' => FavouriteResource::collection($favourites)
         ], 200);
     }
@@ -82,5 +83,15 @@ class FavouriteController extends Controller
                 'error' => 'error occurred while removing favourites.'
             ], 200);
         }
+    }
+
+    public function checkFavourite(Request $request, $userId, $propertyId): JsonResponse
+    {
+        $user = User::findOrFail($userId);
+
+        
+        $isFavourite = $user->favourites->contains($propertyId);
+
+        return response()->json(['is_favourite' => $isFavourite]);
     }
 }

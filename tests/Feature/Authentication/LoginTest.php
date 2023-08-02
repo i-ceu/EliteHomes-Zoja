@@ -19,3 +19,4 @@ it('Login User', function () {
     expect($response['message'])->toBe('Login successful');
     $response->assertJson(['token' => true]);
 });
+
