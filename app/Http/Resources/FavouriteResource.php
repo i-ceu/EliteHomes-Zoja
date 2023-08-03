@@ -22,9 +22,7 @@ class FavouriteResource extends JsonResource
             'property_address' => $this->property_address,
             'category_id' => $this->category_id,
             'property_description' => $this->property_description,
-            'property_other_image_url' => $this->getMedia('propertyPictures')->map(function (Media $media) {
-                return $media->getUrl();
-            })->toArray(),
+            'property_other_image_url' => json_decode($this->property_other_image_url)
         ];
     }
 }

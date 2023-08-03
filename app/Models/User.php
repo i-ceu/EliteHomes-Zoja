@@ -5,21 +5,22 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Property;
 use App\Models\Favourite;
-use Spatie\MediaLibrary\HasMedia;
+// use Spatie\MediaLibrary\HasMedia;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\InteractsWithMedia;
+// use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use CloudinaryLabs\CloudinaryLaravel\MediaAlly;
 
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuids, InteractsWithMedia;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids, MediaAlly;
 
     public $incrementing = false;
 

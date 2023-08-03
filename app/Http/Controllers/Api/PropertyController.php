@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\PropertyRequest;
-use App\Http\Resources\PropertyCollection;
 use App\Http\Resources\PropertyResource;
 use App\Http\Controllers\Controller;
 use App\Models\Property;
@@ -11,8 +10,6 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -27,22 +24,28 @@ class PropertyController extends Controller
 
     public function store(PropertyRequest $request): JsonResponse
     {
-
-        $property = Property::create($request->except(['property_plan_image_url', 'property_other_image_url']));
-
+        $property_other_image_url =[];
+        $property_plan_image_url = "";
         if ($request->hasFile('property_plan_image_url')) {
-            $property->addMediaFromRequest('property_plan_image_url')->toMediaCollection('floor_plans', 'floor_plans');
+            $property_plan_image_url = cloudinary()->upload($request->file('property_plan_image_url')->getRealPath())->getSecurePath();
         }
 
         if ($request->hasFile('property_other_image_url')) {
-            $property->addMultipleMediaFromRequest(['property_other_image_url'])->each->toMediaCollection('propertyPictures', 'property_images');
+            foreach ($request->file('property_other_image_url') as $image) {
+                $property_other_image_url[] = cloudinary()->upload($image->getRealPath())->getSecurePath();
+            }
         }
+        $property = Property::create(array_merge($request->validated(), [
+            'property_other_image_url' => json_encode($property_other_image_url),
+            'property_plan_image_url' => $property_plan_image_url,
+            'user_id'=> auth()->user()->id
+        ]));
         return response()->json([
             'data' => new PropertyResource($property)
         ], Response::HTTP_CREATED);
     }
 
-    public function userindex( Request $request, User $user):JsonResponse
+    public function userindex(Request $request, User $user): JsonResponse
     {
         try {
             $userId = $request->user();
@@ -50,18 +53,17 @@ class PropertyController extends Controller
             $property = Property::where('user_id', $userId->id)->get();
             // echo($property);
             return response()->json([
-                'Message'=> 'User Property Found',
-                'data'=> PropertyResource::collection($property)], Response::HTTP_OK);
-        } 
-        catch (\Throwable $th) {
+                'Message' => 'User Property Found',
+                'data' => PropertyResource::collection($property)
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
             return response()->json([
                 'Message' => 'This User has no Property',
             ], Response::HTTP_NOT_FOUND);
         }
-        
     }
 
-    
+
     public function show(int $property): JsonResponse
     {
         try {
@@ -83,21 +85,30 @@ class PropertyController extends Controller
         try {
 
             $property = Property::findOrFail($property);
-            $property->update($request->except(['property_plan_image_url', 'property_other_image_url']));
 
             if ($request->hasFile('property_plan_image_url')) {
-                $image = $property->getFirstMedia('floor_plans');
-                $property->clearMediaCollection('floor_plans');
-                $property->addMediaFromRequest('property_plan_image_url')->toMediaCollection('floor_plans', 'floor_plans');
-                $property->save();
+                if ($property->property_plan_image_url) {
+                    deleteFromCloudinary($property->property_plan_image_url);
+
+                }
+                $property_plan_image_url = cloudinary()->upload($request->file('property_plan_image_url')->getRealPath())->getSecurePath();
             };
 
             if ($request->hasFile('property_other_image_url')) {
-                $image = $property->getMedia('property_images');
-                $property->clearMediaCollection('propertyPictures');
-                $property->addMultipleMediaFromRequest(['property_other_image_url'])->each->toMediaCollection('propertyPictures', 'property_images');
-                $property->save();
+                foreach ($request->file('property_other_image_url') as $image) {
+                    foreach (json_decode($property->property_other_image_url) as $propImage) {
+                        if ($property->property_other_image_url) {
+                            deleteFromCloudinary($propImage);
+                        }
+                    };
+                    $property_other_image_url[] = cloudinary()->upload($image->getRealPath())->getSecurePath();
+                }
             }
+
+            $property->update(array_merge($request->all(), [
+                'property_plan_image_url' => $property_plan_image_url,
+                'property_other_image_url' => json_encode($property_other_image_url)
+            ]));
 
             return response()->json([
                 'data' => new PropertyResource($property)
@@ -133,7 +144,16 @@ class PropertyController extends Controller
     {
         try {
             $property = Property::findOrFail($property);
+            
+            if ($property->property_plan_image_url) {
+                deleteFromCloudinary($property->property_plan_image_url);
+            }
 
+            foreach (json_decode($property->property_other_image_url) as $propImage) {
+                if ($property->property_other_image_url) {
+                    deleteFromCloudinary($propImage);
+                }
+            };
             $property->delete();
             return response()->json([
                 'Message' => 'Property deleted succesfully'
@@ -144,4 +164,11 @@ class PropertyController extends Controller
             ], Response::HTTP_NOT_FOUND);
         }
     }
+}
+
+function deleteFromCloudinary(string $url)
+{
+    $parts = explode('/', $url);
+    $publicId = explode('.', $parts[7]);
+    return cloudinary()->destroy($publicId);
 }

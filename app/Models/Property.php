@@ -11,12 +11,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
+// use Spatie\MediaLibrary\HasMedia;
+// use Spatie\MediaLibrary\InteractsWithMedia;
+use CloudinaryLabs\CloudinaryLaravel\MediaAlly;
 
-class Property extends Model implements HasMedia
+
+class Property extends Model 
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, MediaAlly;
 
     protected $fillable = [
         'property_name',

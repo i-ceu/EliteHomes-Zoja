@@ -24,7 +24,7 @@ class UserResource extends JsonResource
                 'lastName' => $this->last_name,
                 'fullName' => $this->first_name . ' ' . $this->last_name,
                 'email' => $this->email,
-                'profile_picture' => $this->getFirstMediaUrl('avatars'),
+                'profile_picture' => $this->profile_picture,
                 'phoneNumber' => $this->phone_number,
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at

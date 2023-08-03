@@ -20,7 +20,7 @@ class BookingRequest extends FormRequest
 
     public function __construct(Request $request)
     {
-        $sender_id = $request->merge(['sender_id' => $request->user()?->id]);
+        // $sender_id = $request->merge(['sender_id' => $request->user()?->id]);
     }
     /**
      * Get the validation rules that apply to the request.
@@ -35,7 +35,7 @@ class BookingRequest extends FormRequest
             'message' => ['string', 'required'],
             'phone_number' => ['string', 'required'],
             'property_id' => ['required', 'exists:properties,id'],
-            'sender_id' => ['required', 'exists:users,id'],
+            // 'sender_id' => ['required', 'exists:users,id'],
         ];
     }
 }
