@@ -5,8 +5,9 @@ namespace App\Mail;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendCodeResetPassword extends Mailable
+class SendCodeResetPassword extends Mailable implements ShouldQueue
 {
     public $code;
 
