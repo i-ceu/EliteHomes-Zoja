@@ -53,14 +53,15 @@ class UserController extends Controller
             //code...
             $user = User::findOrFail($user);
 
-            $user->update($request->except('profile_picture'));
-
+            
             if ($request->hasFile('profile_picture')) {
-                $user->clearMediaCollection('profile_picture');
-                $user->addMediaFromRequest('profile_picture')->toMediaCollection('avatars', 'avatars');
-                $user->save();
+                if ($user->profile_picture) {
+                    deleteFromCloudinary($user->profile_picture);
+                }
+                $profile_picture = cloudinary()->upload($request->file('profile_picture')->getRealPath())->getSecurePath();
             };
-
+            
+            $user->update(array_merge($request->all(),['profile_picture' =>$profile_picture]));
             return response()->json([
                 'Message' => 'User updated successfully',
                 'data' => new UserResource($user),
@@ -80,6 +81,9 @@ class UserController extends Controller
         try {
             //code...
             $user = User::findOrFail($user);
+            if ($user->profile_picture) {
+                deleteFromCloudinary($user->profile_picture);
+            }
             $user->delete();
 
             return response()->json([

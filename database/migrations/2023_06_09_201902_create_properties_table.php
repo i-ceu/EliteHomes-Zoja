@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('property_bedroom_number');
             $table->integer('property_toilet_number');
             $table->string('property_plan_image_url');
-            $table->string('property_other_image_url');
+            $table->json('property_other_image_url');
 
             $table->timestamps();
         });

@@ -22,7 +22,9 @@ class BookingController extends Controller
      */
     public function store(BookingRequest $request): JsonResponse
     {
-        $booking = Booking::create($request->validated());
+        $user =auth()->user();
+
+        $booking = Booking::create(array_merge($request->validated(), ['sender_id'=> $user->id]));
 
         $property = Property::findOrFail($booking->property_id);
         $user = User::findOrFail($property->user_id);

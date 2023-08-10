@@ -29,13 +29,13 @@ class AuthController extends Controller
     public function register(SignupRequest $request): JsonResponse
     {
 
-
-        $user = User::create($request->except('profile_picture'));
-
         if ($request->hasFile('profile_picture')) {
-            $user->addMediaFromRequest('profile_picture')->toMediaCollection('avatars', 'avatars');
-        }
+            $profile_picture = cloudinary()->upload($request->file('profile_picture')->getRealPath())->getSecurePath();
 
+        }
+        
+        $user = User::create(array_merge($request->validated(), ['profile_picture'=>$profile_picture]));
+        
         UserSignup::dispatch($user);
 
         return response()->json([
@@ -60,7 +60,7 @@ class AuthController extends Controller
             'lastName' => $user->last_name,
             'email' => $user->email,
             'phone_number' => $user->phone_number,
-            'profilePicture' =>  $user->getFirstMediaUrl('avatars'),
+            'profilePicture' =>  $user->profile_picture,
         ];
 
         $user->full_name = $user->first_name . ' ' . $user->last_name; // @phpstan-ignore-line

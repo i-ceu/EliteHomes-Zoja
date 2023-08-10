@@ -19,10 +19,10 @@ class PropertyRequest extends FormRequest
 
     public function __construct(Request $request)
     {
-        $request->merge([
-            'user_id' => $request->user()?->id,
-            'property_other_image_url' => json_encode($request->property_other_image_url)
-        ]);
+        // $request->merge([
+        //     'user_id' => $request->user()?->id,
+        //     'property_other_image_url' => json_encode($request->property_other_image_url)
+        // ]);
     }
 
     /**
@@ -44,7 +44,7 @@ class PropertyRequest extends FormRequest
             'property_toilet_number' => 'required',
             'property_plan_image_url' => 'nullable|mimes:png,jpg,svg,jpeg,webp',
             'property_other_image_url.*' => 'nullable|mimes:png,jpg,svg,jpeg,webp',
-            'user_id' => ['required']
+            // 'user_id' => ['required']
             // "img"=>'required|mimes:png,jpg,svg,jpeg,webp'
         ];
     }
